@@ -4,7 +4,9 @@ package com.example.auctionsite.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -18,14 +20,23 @@ public class Auction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long auctionId;
 
-    private Item item;
+    private String title;
+
+    private Categories category;
+
+    @OneToMany
+    private List<Bid> bids;
 
     @ManyToOne
     private User user;
 
+    private BigDecimal startPrice;
+
+    private BigDecimal minimumBidIncrement;
+
     private Date postDate;
 
-    private Date experienceDate;
+    private Date endDate;
 
 
 }

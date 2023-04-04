@@ -17,16 +17,17 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long UserId;
+    private Long userId;
 
     @OneToMany
     private List<Auction> auctionItemList;
 
-    private String nickmane;
-
     private String firstName;
 
-    private String surname;
+    private String lastName;
 
+    private String email;
+
+    private String password;
 
 }
