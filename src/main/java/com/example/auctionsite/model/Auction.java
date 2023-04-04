@@ -4,7 +4,7 @@ package com.example.auctionsite.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -12,21 +12,20 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class UserWithAccount {
-
+public class Auction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long UserId;
+    private Long auctionId;
 
-    @OneToMany
-    private List<AuctionItem> auctionItemList;
+    private Item item;
 
-    private String nickmane;
+    @ManyToOne
+    private User user;
 
-    private String firstName;
+    private Date postDate;
 
-    private String surname;
+    private Date experienceDate;
 
 
 }

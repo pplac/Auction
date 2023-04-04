@@ -3,10 +3,8 @@ package com.example.auctionsite.model;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,6 +18,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long UserId;
+
+    @OneToMany
+    private List<Auction> auctionItemList;
 
     private String nickmane;
 
