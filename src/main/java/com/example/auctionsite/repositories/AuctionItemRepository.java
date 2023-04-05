@@ -11,6 +11,6 @@ public interface AuctionItemRepository extends JpaRepository<Auction, Long> {
 
         List<Auction> findByCategories(Categories categories);
 
-        List<Auction> findByItemName(String name);
+        List<Auction> findByTitle(String name);
 
 }

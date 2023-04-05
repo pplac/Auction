@@ -1,6 +1,7 @@
 package com.example.auctionsite.model;
 
 
+import com.example.auctionsite.auth.Customer;
 import lombok.*;
 
 import javax.persistence.*;
@@ -28,7 +29,7 @@ public class Auction {
     private List<Bid> bids;
 
     @ManyToOne
-    private User user;
+    private Customer customer;
 
     private BigDecimal startPrice;
 
