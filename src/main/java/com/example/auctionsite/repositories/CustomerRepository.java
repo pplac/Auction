@@ -1,6 +1,6 @@
 package com.example.auctionsite.repositories;
 
-import com.example.auctionsite.auth.Customer;
+import com.example.auctionsite.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,6 +1,7 @@
-package com.example.auctionsite.auth;
+package com.example.auctionsite.model;
 
 
+import com.example.auctionsite.annotation.PostalCode;
 import com.example.auctionsite.model.Auction;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.Collection;
 import java.util.List;
 
@@ -29,9 +31,14 @@ public class Customer implements UserDetails {
 
     private String username;
 
+//    @Email(regexp = ".+[@].+[\\.].+")
+    @EmailApp
     private String email;
 
     private String password;
+
+    @PostalCode
+    private String postalCode;
 
 
 

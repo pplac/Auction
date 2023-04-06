@@ -1,13 +1,10 @@
 package com.example.auctionsite.service;
 
-import com.example.auctionsite.auth.Customer;
+import com.example.auctionsite.model.Customer;
 import com.example.auctionsite.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 

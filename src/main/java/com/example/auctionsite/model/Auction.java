@@ -1,7 +1,6 @@
 package com.example.auctionsite.model;
 
 
-import com.example.auctionsite.auth.Customer;
 import lombok.*;
 
 import javax.persistence.*;
