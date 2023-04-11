@@ -1,10 +1,7 @@
 package com.example.auctionsite.model;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -20,6 +17,9 @@ public class Bid {
     private Long bidId;
 
     private int amount;
+
+    @ManyToOne
+    private Auction auction;
 
 
 }

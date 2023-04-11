@@ -24,21 +24,21 @@ public class Customer implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long customerId;
 
-    @OneToMany
-    private List<Auction> auctionItemList;
-
-    private String username;
-
-//    @Email(regexp = ".+[@].+[\\.].+")
-    @EmailApp
-    private String email;
+    private String customerName;
 
     private String password;
 
+//    @Email(regexp = ".+[@].+[\\.].+")
+//    @EmailApp
+    private String email;
+
     @PostalCode
     private String postalCode;
+
+    @ManyToMany
+    private List<Auction> auctionList;
 
 
 
@@ -49,7 +49,7 @@ public class Customer implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return customerName;
     }
 
     @Override
