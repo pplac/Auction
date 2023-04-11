@@ -12,26 +12,26 @@ import java.util.Optional;
 public class CustomerService {
 
     @Autowired
-    private CustomerRepository userRepository;
+    private CustomerRepository customerRepository;
 
-    public Customer createUser(final Customer user) {
+    public Customer createCustomer(final Customer customer) {
 
-        if (isUserInvalidByNickname(user)) {
+        if (isCustomerInvalidByName(customer)) {
             throw new IllegalArgumentException();
         }
-        return userRepository.save(user);
+        return customerRepository.save(customer);
     }
 
-    private boolean isUserInvalidByNickname(final Customer user) {
-        return user.getNickmane().length() == 0;
+    private boolean isCustomerInvalidByName(final Customer customer) {
+        return customer.getCustomerName().length() == 0;
     }
 
-    public List<Customer> getAllUsers() {
-        return userRepository.findAll();
+    public List<Customer> getAllCustomers() {
+        return customerRepository.findAll();
     }
 
-    public Optional<Customer> getUserById(final Long userId) {
-        return userRepository.findById(userId);
+    public Optional<Customer> getCustomerByName(final Long customerId) {
+        return customerRepository.findById(customerId);
     }
 
 

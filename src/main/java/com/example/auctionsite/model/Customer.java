@@ -21,7 +21,6 @@ import java.util.List;
 @ToString
 public class Customer implements UserDetails {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long customerId;

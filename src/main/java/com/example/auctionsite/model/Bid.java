@@ -16,7 +16,7 @@ public class Bid {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bidId;
 
-    private int amount;
+    private double amount;
 
     @ManyToOne
     private Auction auction;
