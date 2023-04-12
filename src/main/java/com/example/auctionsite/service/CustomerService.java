@@ -1,6 +1,6 @@
 package com.example.auctionsite.service;
 
-import com.example.auctionsite.model.Customer;
+import com.example.auctionsite.model.CustomerModel;
 import com.example.auctionsite.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    public Customer createCustomer(final Customer customer) {
+    public CustomerModel createCustomer(final CustomerModel customer) {
 
         if (isCustomerInvalidByName(customer)) {
             throw new IllegalArgumentException();
@@ -22,15 +22,15 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
-    private boolean isCustomerInvalidByName(final Customer customer) {
+    private boolean isCustomerInvalidByName(final CustomerModel customer) {
         return customer.getCustomerName().length() == 0;
     }
 
-    public List<Customer> getAllCustomers() {
+    public List<CustomerModel> getAllCustomers() {
         return customerRepository.findAll();
     }
 
-    public Optional<Customer> getCustomerByName(final Long customerId) {
+    public Optional<CustomerModel> getCustomerByName(final Long customerId) {
         return customerRepository.findById(customerId);
     }
 

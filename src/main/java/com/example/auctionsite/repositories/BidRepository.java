@@ -1,13 +1,13 @@
 package com.example.auctionsite.repositories;
 
-import com.example.auctionsite.model.Bid;
+import com.example.auctionsite.model.BidModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public interface BidRepository extends JpaRepository<Bid, Long> {
+public interface BidRepository extends JpaRepository<BidModel, Long> {
 
-    List<Bid> bidList = new ArrayList<>();
+    List<BidModel> bidModelList = new ArrayList<>();
 
 }

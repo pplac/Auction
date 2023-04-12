@@ -2,16 +2,16 @@ package com.example.auctionsite.model;
 
 
 import com.example.auctionsite.annotation.PostalCode;
-import com.example.auctionsite.model.Auction;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -19,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Customer implements UserDetails {
+public class CustomerModel implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,17 +27,23 @@ public class Customer implements UserDetails {
 
     private String customerName;
 
-    private String password;
+    private String customerPassword;
 
 //    @Email(regexp = ".+[@].+[\\.].+")
 //    @EmailApp
-    private String email;
+    private String customerEmail;
 
     @PostalCode
-    private String postalCode;
+    private String customerPostalCode;
 
     @ManyToMany
-    private List<Auction> auctionList;
+    private List<AuctionModel> customerAuctionList;
+
+    @OneToMany
+    private List<AuctionItemModel> customerItemsWon;
+
+    @OneToMany
+    private Set<BidModel> customerBidsList = new HashSet<>();
 
 
 
@@ -53,7 +59,7 @@ public class Customer implements UserDetails {
 
     @Override
     public String getPassword() {
-        return password;
+        return customerPassword;
     }
 
     @Override

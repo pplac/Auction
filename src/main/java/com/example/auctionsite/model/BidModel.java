@@ -2,7 +2,6 @@ package com.example.auctionsite.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 @Getter
@@ -10,16 +9,19 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Bid {
+public class BidModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bidId;
 
-    private double amount;
+    private double bidAmount;
 
     @ManyToOne
-    private Auction auction;
+    private AuctionModel auctionModel;
+
+    @ManyToOne
+    private CustomerModel customerModel;
 
 
 }

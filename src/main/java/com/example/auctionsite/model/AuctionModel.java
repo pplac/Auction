@@ -1,14 +1,15 @@
 package com.example.auctionsite.model;
 
 
-import com.example.auctionsite.annotation.EmailApp;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -17,30 +18,27 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 //@Data
-public class Auction {
+public class AuctionModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long auctionId;
 
-    @Embedded
-    private AuctionItem item;
+    private double auctionMinimumBid;
 
-    @OneToMany
-    private List<Bid> bids;
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private Date auctionPostDate;
+
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private Date auctionEndDate;
+
+    @OneToOne
+    private AuctionItemModel auctionItem;
 
     @ManyToMany
-    private List<Customer> customers;
+    private List<CustomerModel> auctionCustomerList;
 
-    private BigDecimal startingPrice;
-
-    private BigDecimal minimumBidIncrement;
-
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date postDate;
-
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date endDate;
-
+    @OneToMany
+    private Set<BidModel> auctionBids = new HashSet<>();
 
 }
