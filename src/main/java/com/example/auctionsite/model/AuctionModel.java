@@ -33,10 +33,10 @@ public class AuctionModel {
     private Date auctionEndDate;
 
     @OneToOne
-    private AuctionItemModel auctionItem;
+    private AuctionItemModel auctionItemModel;
 
     @ManyToMany
-    private List<CustomerModel> auctionCustomerList;
+    private Set<CustomerModel> auctionCustomerList;
 
     @OneToMany
     private Set<BidModel> auctionBids = new HashSet<>();

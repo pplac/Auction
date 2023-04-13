@@ -8,13 +8,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AuctionItemRepository extends JpaRepository<AuctionItemModel, Long> {
 
 
         Page<AuctionItemModel> findAllBy(Pageable pageable);
 
-        List<AuctionItemModel> findByCategories(Categories category);
+        Optional<AuctionItemModel> findByCategories(Categories category);
 
         List<AuctionItemModel> findByTitle(String title);
 

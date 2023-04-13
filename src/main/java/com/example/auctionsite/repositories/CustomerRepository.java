@@ -4,10 +4,11 @@ import com.example.auctionsite.model.CustomerModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CustomerRepository extends JpaRepository<CustomerModel, Long> {
 
-    List<CustomerModel> findByCustomerName(String customerName);
+    Optional<CustomerModel> findByCustomerName(String customerName);
 
 
 

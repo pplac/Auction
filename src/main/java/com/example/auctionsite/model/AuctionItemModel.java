@@ -23,9 +23,9 @@ public class AuctionItemModel {
     private double auctionItemStartingPrice;
 
     @OneToOne
-    private AuctionModel auctionItemAuctionModel;
+    private AuctionModel auctionModel;
 
     @ManyToOne
-    private CustomerModel AuctionItemCustomer;
+    private CustomerModel auctionItemCustomer;
 
 }

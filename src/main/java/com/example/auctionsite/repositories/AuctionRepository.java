@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AuctionRepository extends JpaRepository<AuctionModel, Long> {
 
-    Page<AuctionModel> findAllBy(Pageable pageable);
+    Page<AuctionModel> findAll(Pageable pageable);
 
 }

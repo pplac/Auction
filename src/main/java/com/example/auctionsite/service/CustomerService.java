@@ -2,27 +2,39 @@ package com.example.auctionsite.service;
 
 import com.example.auctionsite.model.CustomerModel;
 import com.example.auctionsite.repositories.CustomerRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
-public class CustomerService {
+public class CustomerService  implements UserDetailsService {
 
-    @Autowired
     private CustomerRepository customerRepository;
+
+
+    @Override
+    public UserDetails loadUserByUsername(String customerName) throws UsernameNotFoundException {
+        final Optional<CustomerModel> customerModel = customerRepository.findByCustomerName(customerName);
+
+        return customerModel.orElseThrow(() -> new UsernameNotFoundException("Customer not found"));
+    }
 
     public CustomerModel createCustomer(final CustomerModel customer) {
 
-        if (isCustomerInvalidByName(customer)) {
+        if (isCustomerInvalid(customer)) {
             throw new IllegalArgumentException();
         }
         return customerRepository.save(customer);
     }
 
-    private boolean isCustomerInvalidByName(final CustomerModel customer) {
+    private boolean isCustomerInvalid(final CustomerModel customer) {
         return customer.getCustomerName().length() == 0;
     }
 
@@ -30,9 +42,14 @@ public class CustomerService {
         return customerRepository.findAll();
     }
 
-    public Optional<CustomerModel> getCustomerByName(final Long customerId) {
+    public Optional<CustomerModel> getCustomerById(final Long customerId) {
         return customerRepository.findById(customerId);
     }
+
+    public void deleteCustomer(Long id) {
+        customerRepository.deleteById(id);
+    }
+
 
 
 }
