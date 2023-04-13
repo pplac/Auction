@@ -8,8 +8,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -17,6 +19,7 @@ import java.util.Optional;
 public class AuctionItemService {
 
     private final AuctionItemRepository auctionItemRepository;
+
 
     public List<AuctionItemModel> getAuctionItemList() {
         return auctionItemRepository.findAll();
@@ -28,13 +31,10 @@ public class AuctionItemService {
 
     public AuctionItemModel getAuctionItemByCategories(Categories categories) {
         Optional<AuctionItemModel> auctionItemModel = auctionItemRepository.findByCategories(categories);
-
-        if(auctionItemModel.get().getAuctionItemCategory().equals(categories)) {
-            return auctionItemRepository.findByCategories(categories).orElse(null);
-        } else {
-            log.info("there is no such thing");
-            return null;
-        }
+        auctionItemModel.stream()
+                .filter(auctionItem -> auctionItem.getAuctionItemCategory() == categories)
+                .collect(Collectors.toList());
+        return null;
     }
 
     public void deleteAuctionItem(Long id) {

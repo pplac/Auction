@@ -1,0 +1,7 @@
+Czy mógłbys zobaczyc czy to się jakoś logicznie trzyma? czy nie za dużo tych @OneToMany, @ManyToOne?
+Przez to tworzy mi sie dużo tabel w mySql Workbanch i nie wiem czy to dobrze. Czuje, że e tym trochę pokręciłam,
+można zrobić to lepiej?
+Pytania:
+1. Jak przypisać Bid do danej aukcji i Item? w której klasie to najlepiej zrobić? nie mam na to pomysłu
+2. Co zrobić, żeby przy tworzeniu item powstała również nowa aukcja?
+3. Czy repozytoria
