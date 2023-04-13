@@ -39,6 +39,6 @@ public class AuctionModel {
     private Set<CustomerModel> auctionCustomerList;
 
     @OneToMany
-    private Set<BidModel> auctionBids = new HashSet<>();
+    private Set<BidModel> auctionBids;
 
 }

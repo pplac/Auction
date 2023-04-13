@@ -23,12 +23,12 @@ public class AuctionService {
 
 //    Map<AuctionItemModel, BidModel>
 
-    public void AddAuction(AuctionModel auctionModel) {
-        auctionRepository.save(auctionModel);
-    }
-
     public List<AuctionModel> getAllAuctions() {
         return auctionRepository.findAll();
+    }
+
+    public void AddAuction(AuctionModel auctionModel) {
+        auctionRepository.save(auctionModel);
     }
 
     public AuctionModel getAuctionById(Long id) {

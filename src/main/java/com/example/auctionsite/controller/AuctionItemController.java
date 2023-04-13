@@ -1,4 +1,4 @@
 package com.example.auctionsite.controller;
 
-public class AuthController {
+public class AuctionItemController {
 }
