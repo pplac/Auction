@@ -1,4 +1,4 @@
-Mam wrażenie, że troche mi sie wszystko rozjechało. Czy mógłbys zobaczyc czy to się jakoś logicznie trzyma?
+To projekt strony aukcyjnej, cos jak Allegro. Mam wrażenie, że troche mi sie wszystko rozjechało. Czy mógłbys zobaczyc czy to się jakoś logicznie trzyma?
 Czy nie za dużo tych @OneToMany, @ManyToOne? Przez to tworzy mi sie dużo tabel w mySql Workbanch i nie wiem czy to dobrze.
 Można zrobić to lepiej?
 Pozostałe pytania:
