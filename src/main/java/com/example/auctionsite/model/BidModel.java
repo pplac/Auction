@@ -2,6 +2,8 @@ package com.example.auctionsite.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -15,13 +17,13 @@ public class BidModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bidId;
 
-    private double bidAmount;
+    private BigDecimal bidAmount;
+
+    private LocalDateTime betDate;
 
     @ManyToOne
     private AuctionModel auctionModel;
 
-    @ManyToOne
-    private CustomerModel customerModel;
 
 
 }

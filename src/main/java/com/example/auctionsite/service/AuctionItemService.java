@@ -1,14 +1,12 @@
 package com.example.auctionsite.service;
 
 import com.example.auctionsite.model.AuctionItemModel;
-import com.example.auctionsite.model.AuctionModel;
-import com.example.auctionsite.model.Categories;
+import com.example.auctionsite.model.enums.Categories;
 import com.example.auctionsite.repositories.AuctionItemRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

@@ -2,6 +2,7 @@ package com.example.auctionsite.model;
 
 
 import com.example.auctionsite.annotation.PostalCode;
+import com.example.auctionsite.model.enums.Role;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -42,8 +43,8 @@ public class CustomerModel implements UserDetails {
     @OneToMany
     private List<AuctionItemModel> customerItemsWon;
 
-    @OneToMany
-    private Set<BidModel> customerBidsList = new HashSet<>();
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    Set<Role> customerRoles = new HashSet<>();
 
 
 

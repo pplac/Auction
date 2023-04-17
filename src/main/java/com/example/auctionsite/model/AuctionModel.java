@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -27,10 +28,10 @@ public class AuctionModel {
     private double auctionMinimumBid;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date auctionPostDate;
+    private LocalDateTime auctionPostDate;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
-    private Date auctionEndDate;
+    private LocalDateTime auctionEndDate;
 
     @OneToOne
     private AuctionItemModel auctionItemModel;
@@ -39,6 +40,8 @@ public class AuctionModel {
     private Set<CustomerModel> auctionCustomerList;
 
     @OneToMany
-    private Set<BidModel> auctionBids;
+    private Set<BidModel> auctionBids = new HashSet<>();
+
+    private boolean auctionIsActive;
 
 }

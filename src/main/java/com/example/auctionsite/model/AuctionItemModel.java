@@ -1,9 +1,11 @@
 package com.example.auctionsite.model;
 
 
+import com.example.auctionsite.model.enums.Categories;
 import lombok.*;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 
 @Entity
 @Getter
@@ -20,7 +22,10 @@ public class AuctionItemModel {
 
     private Categories auctionItemCategory;
 
-    private double auctionItemStartingPrice;
+    @Column(name = "description")
+    private String auctionItemDescription;
+
+    private BigDecimal auctionItemInitCost;
 
     @OneToOne
     private AuctionModel auctionModel;
