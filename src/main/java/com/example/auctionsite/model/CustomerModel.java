@@ -1,6 +1,7 @@
 package com.example.auctionsite.model;
 
 
+import com.example.auctionsite.annotation.EmailApp;
 import com.example.auctionsite.annotation.PostalCode;
 import com.example.auctionsite.model.enums.Role;
 import lombok.*;
@@ -30,8 +31,7 @@ public class CustomerModel implements UserDetails {
 
     private String customerPassword;
 
-//    @Email(regexp = ".+[@].+[\\.].+")
-//    @EmailApp
+    @EmailApp
     private String customerEmail;
 
     @PostalCode
