@@ -19,6 +19,16 @@ public class AuctionItemService {
     private final AuctionItemRepository auctionItemRepository;
 
 
+    public AuctionItemModel getAuctionItemById(Long id) {
+        Optional<AuctionItemModel> auctionItem = auctionItemRepository.findById(id);
+        if (auctionItem.isPresent()) {
+            return auctionItemRepository.findById(id).orElse(null);
+        } else {
+            log.info("Brak przedmiotu");
+            return null;
+        }
+    }
+
     public List<AuctionItemModel> getAuctionItemList() {
         return auctionItemRepository.findAll();
     }

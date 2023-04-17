@@ -18,7 +18,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-//@Data
+@Builder
 public class AuctionModel {
 
     @Id
