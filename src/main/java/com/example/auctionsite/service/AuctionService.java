@@ -18,6 +18,10 @@ public class AuctionService {
 
 //    Map<AuctionItemModel, BidModel>
 
+    public AuctionModel createAuction(AuctionModel auction) {
+        return auctionRepository.save(auction);
+    }
+
     public List<AuctionModel> getAllAuctions() {
         return auctionRepository.findAll();
     }

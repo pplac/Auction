@@ -41,6 +41,9 @@ public class CustomerModel implements UserDetails {
     private List<AuctionModel> customerAuctionList;
 
     @OneToMany
+    private Set<BidModel> customerBids;
+
+    @OneToMany
     private List<AuctionItemModel> customerItemsWon;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)

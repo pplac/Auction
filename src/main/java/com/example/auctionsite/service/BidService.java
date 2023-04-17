@@ -15,12 +15,11 @@ public class BidService {
 
     private final BidRepository bidRepository;
 
-    public void addBid(BidModel bid) {
+    public void createBid(BidModel bid) {
         bidRepository.save(bid);
     }
 
-//    public void getHighestBit() {
-//        double highestBid = aucitonBids.st
-//    }
+
+
 
 }

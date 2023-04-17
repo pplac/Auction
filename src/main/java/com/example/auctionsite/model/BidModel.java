@@ -19,10 +19,13 @@ public class BidModel {
 
     private BigDecimal bidAmount;
 
-    private LocalDateTime betDate;
+    private LocalDateTime bidDate;
 
     @ManyToOne
-    private AuctionModel auctionModel;
+    private AuctionModel auctionModelId;
+
+    @ManyToOne
+    private CustomerModel customerModelId;
 
 
 

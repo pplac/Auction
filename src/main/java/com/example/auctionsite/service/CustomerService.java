@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -33,6 +34,11 @@ public class CustomerService {
     public CustomerModel getCustomerById(final Long customerId) {
         return customerRepository.findById(customerId)
                 .orElseThrow(() -> new UsernameNotFoundException("User cannot be found with id: " + customerId));
+    }
+
+    public CustomerModel getCustomerByEmail(String customerEmail) {
+        return customerRepository.findCustomerByCustomerEmail(customerEmail)
+                .orElseThrow(() ->new UsernameNotFoundException("User cannot be found with id: " + customerEmail));
     }
 
     public List<CustomerModel> getCustomerByKeyword(String keyword) {
