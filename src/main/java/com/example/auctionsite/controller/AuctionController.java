@@ -37,9 +37,8 @@ public class AuctionController {
     public void getCreateAuction(@RequestBody CreateAuctionRequest request) {
 
         CustomerModel customer = customerService.getCustomerById(request.getAuctionCustomerOwnerId());
-        AuctionItemModel auctionItem = auctionItemService.getAuctionItemById(request.getAuctionModelId());
+        AuctionItemModel auctionItem = auctionItemService.getAuctionItemById(request.getAuctionItemModelId());
         AuctionModel auction = AuctionModel.builder()
-                .auctionId(request.getAuctionModelId())
                 .auctionCustomerOwnerId(customer)
                 .auctionMinimumBid(request.getAuctionMinimumBid())
                 .auctionPostDate(request.getAuctionPostDate())

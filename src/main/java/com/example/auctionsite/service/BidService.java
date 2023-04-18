@@ -21,7 +21,7 @@ public class BidService {
         bidRepository.save(bid);
     }
 
-    public BidModel getBidById(Long bidId) {
+    public BidModel getAuctionsBidsById(Long bidId) {
         return bidRepository.findAllByBidId(bidId)
                 .orElseThrow(() -> new BidNotFoundException("Bid not found: " + bidId));
     }

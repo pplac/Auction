@@ -24,7 +24,7 @@ public class AuctionModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long auctionId;
-    @OneToOne
+    @ManyToOne
     private CustomerModel auctionCustomerOwnerId;
 
     private BigDecimal auctionMinimumBid;

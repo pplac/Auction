@@ -21,6 +21,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Builder
 public class CustomerModel implements UserDetails {
 
     @Id
@@ -36,8 +37,8 @@ public class CustomerModel implements UserDetails {
 
     @PostalCode
     private String customerPostalCode;
-    @OneToOne
-    private AuctionModel customerAuctionOwnerId;
+    @OneToMany
+    private List<AuctionModel> customerAuctionOwnerList;
 
     @ManyToMany
     private List<AuctionModel> customerAuctionList;

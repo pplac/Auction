@@ -21,7 +21,6 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class CreateAuctionRequest {
 
-    Long auctionModelId;
     Long auctionCustomerOwnerId;
     BigDecimal auctionMinimumBid;
     LocalDateTime auctionPostDate;
