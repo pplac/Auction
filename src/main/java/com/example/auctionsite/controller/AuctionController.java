@@ -44,6 +44,8 @@ public class AuctionController {
         auctionService.editAuctionWithBid(request);
     }
 
+    public
+
 
 //    public void getEditAuction() {
 //

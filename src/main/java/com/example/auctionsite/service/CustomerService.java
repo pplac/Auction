@@ -17,7 +17,7 @@ import java.util.Set;
 public class CustomerService {
 
     private CustomerRepository customerRepository;
-    private CustomerService customerService;
+
 
     public CustomerModel createCustomer(CreateCustomerRequest request) {
 

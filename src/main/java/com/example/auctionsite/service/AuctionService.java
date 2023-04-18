@@ -6,10 +6,10 @@ import com.example.auctionsite.model.BidModel;
 import com.example.auctionsite.model.CustomerModel;
 import com.example.auctionsite.repositories.AuctionRepository;
 import com.example.auctionsite.request.CreateAuctionRequest;
+import com.example.auctionsite.request.CreateBidRequest;
 import com.example.auctionsite.request.EditAuctionWithBidRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -66,6 +66,10 @@ public class AuctionService {
         BidModel bidModel = bidService.createBid(bid);
         auction.getAuctionBids().add(bidModel);
         auctionRepository.save(auction);
+    }
+
+    public AuctionModel getAuctionWinner(CreateBidRequest request) {
+
     }
 
     public AuctionModel getAuctionById(Long id) {

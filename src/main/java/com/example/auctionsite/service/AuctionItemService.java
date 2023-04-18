@@ -24,7 +24,10 @@ public class AuctionItemService {
     public AuctionItemModel createAuctionItem(CreateAuctionItemRequest request) {
 
         AuctionItemModel auctionItem = AuctionItemModel.builder()
-                .auctionItemTitle(request.)
+                .auctionItemTitle(request.getAuctionItemTitle())
+                .auctionItemCategory(request.getAuctionItemCategory())
+                .auctionItemDescription(request.getAuctionItemDescription())
+                .auctionItemInitCost(request.getAuctionItemInitCost())
                 .build();
 
         return auctionItemRepository.save(auctionItem);
