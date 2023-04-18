@@ -3,6 +3,7 @@ package com.example.auctionsite.service;
 import com.example.auctionsite.model.AuctionItemModel;
 import com.example.auctionsite.model.enums.Categories;
 import com.example.auctionsite.repositories.AuctionItemRepository;
+import com.example.auctionsite.request.CreateAuctionItemRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,16 @@ public class AuctionItemService {
 
     private final AuctionItemRepository auctionItemRepository;
 
+
+
+    public AuctionItemModel createAuctionItem(CreateAuctionItemRequest request) {
+
+        AuctionItemModel auctionItem = AuctionItemModel.builder()
+                .auctionItemTitle(request.)
+                .build();
+
+        return auctionItemRepository.save(auctionItem);
+    }
 
     public AuctionItemModel getAuctionItemById(Long id) {
         Optional<AuctionItemModel> auctionItem = auctionItemRepository.findById(id);

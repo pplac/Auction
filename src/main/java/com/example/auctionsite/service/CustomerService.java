@@ -1,21 +1,37 @@
 package com.example.auctionsite.service;
 
 import com.example.auctionsite.model.CustomerModel;
+import com.example.auctionsite.model.enums.Role;
 import com.example.auctionsite.repositories.CustomerRepository;
+import com.example.auctionsite.request.CreateCustomerRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
 public class CustomerService {
 
     private CustomerRepository customerRepository;
+    private CustomerService customerService;
 
-    public CustomerModel createCustomer(final CustomerModel customer) {
+    public CustomerModel createCustomer(CreateCustomerRequest request) {
+
+        CustomerModel customer = CustomerModel.builder()
+                .customerName(request.getCustomerName())
+                .customerPassword(request.getCustomerPassword())
+                .customerEmail(request.getCustomerEmail())
+                .customerPostalCode(request.getCustomerPostalCode())
+                .customerAuctionOwnerList(List.of())
+                .customerAuctionList(List.of())
+                .customerBids(Set.of())
+                .customerItemsWon(List.of())
+                .customerRoles(Set.of(Role.ROLE_BUYER))
+                .build();
 
         if (isCustomerInvalid(customer)) {
             throw new IllegalArgumentException();
@@ -23,7 +39,7 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
-    private boolean isCustomerInvalid(final CustomerModel customer) {
+    private boolean isCustomerInvalid(CustomerModel customer) {
         return customer.getCustomerName().length() == 0;
     }
 

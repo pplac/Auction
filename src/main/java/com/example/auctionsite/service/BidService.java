@@ -17,8 +17,8 @@ public class BidService {
 
     private final BidRepository bidRepository;
 
-    public void createBid(BidModel bid) {
-        bidRepository.save(bid);
+    public BidModel createBid(BidModel bid) {
+        return bidRepository.save(bid);
     }
 
     public BidModel getAuctionsBidsById(Long bidId) {

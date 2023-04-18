@@ -1,23 +1,46 @@
 package com.example.auctionsite.service;
 
+import com.example.auctionsite.model.AuctionItemModel;
 import com.example.auctionsite.model.AuctionModel;
+import com.example.auctionsite.model.BidModel;
+import com.example.auctionsite.model.CustomerModel;
 import com.example.auctionsite.repositories.AuctionRepository;
+import com.example.auctionsite.request.CreateAuctionRequest;
+import com.example.auctionsite.request.EditAuctionWithBidRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
 @Slf4j
 public class AuctionService {
 
-    private final AuctionRepository auctionRepository;
+    private AuctionRepository auctionRepository;
+    private CustomerService customerService;
+    private AuctionService auctionService;
+    private BidService bidService;
+    private AuctionItemService auctionItemService;
 
 
-    public AuctionModel createAuction(AuctionModel auction) {
+    public AuctionModel createAuction(CreateAuctionRequest request) {
+
+        CustomerModel customer = customerService.getCustomerById(request.getAuctionCustomerOwnerId());
+        AuctionItemModel auctionItem = auctionItemService.getAuctionItemById(request.getAuctionItemModelId());
+        AuctionModel auction = AuctionModel.builder()
+                .auctionCustomerOwnerId(customer)
+                .auctionMinimumBid(request.getAuctionMinimumBid())
+                .auctionPostDate(request.getAuctionPostDate())
+                .auctionEndDate(request.getAuctionEndDate())
+                .auctionBids(Set.of())
+                .auctionItemModel(auctionItem)
+                .build();
+
         return auctionRepository.save(auction);
     }
 
@@ -25,6 +48,25 @@ public class AuctionService {
         return auctionRepository.findAll();
     }
 
+    public List<AuctionModel> getAllCustomerAuctionsList(final Long customerId) {
+        return auctionRepository.findAllByCustomerAuctionList(customerId);
+
+    }
+
+    public void editAuctionWithBid(EditAuctionWithBidRequest request) {
+        CustomerModel customer = customerService.getCustomerById(request.getCustomerModelId());
+        AuctionModel auction = auctionService.getAuctionById(request.getAuctionModelId());
+        BidModel bid = BidModel.builder()
+                .bidAmount(request.getBidAmount())
+                .bidDate(request.getBidDate())
+                .auctionModelId(auction)
+                .customerModelId(customer)
+                .build();
+
+        BidModel bidModel = bidService.createBid(bid);
+        auction.getAuctionBids().add(bidModel);
+        auctionRepository.save(auction);
+    }
 
     public AuctionModel getAuctionById(Long id) {
         Optional<AuctionModel> auction = auctionRepository.findById(id);
