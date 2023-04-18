@@ -16,7 +16,6 @@ public class AuctionService {
 
     private final AuctionRepository auctionRepository;
 
-//    Map<AuctionItemModel, BidModel>
 
     public AuctionModel createAuction(AuctionModel auction) {
         return auctionRepository.save(auction);
@@ -26,9 +25,6 @@ public class AuctionService {
         return auctionRepository.findAll();
     }
 
-    public void AddAuction(AuctionModel auctionModel) {
-        auctionRepository.save(auctionModel);
-    }
 
     public AuctionModel getAuctionById(Long id) {
         Optional<AuctionModel> auction = auctionRepository.findById(id);

@@ -2,6 +2,8 @@ package com.example.auctionsite.request;
 
 
 import com.example.auctionsite.model.AuctionItemModel;
+import com.example.auctionsite.model.AuctionModel;
+import com.example.auctionsite.model.BidModel;
 import com.example.auctionsite.model.CustomerModel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +13,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -19,11 +22,13 @@ import java.util.List;
 public class CreateAuctionRequest {
 
     Long auctionModelId;
-    double auctionMinimumBid;
+    Long auctionCustomerOwnerId;
+    BigDecimal auctionMinimumBid;
     LocalDateTime auctionPostDate;
     LocalDateTime auctionEndDate;
-    BigDecimal auctionBid;
+    Set<BidModel> auctionBids;
     Long auctionItemModelId;
-    Long customerSellId;
+    Set<CustomerModel> auctionCustomerList;
+
 
 }

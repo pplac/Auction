@@ -24,8 +24,10 @@ public class AuctionModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long auctionId;
+    @OneToOne
+    private CustomerModel auctionCustomerOwnerId;
 
-    private double auctionMinimumBid;
+    private BigDecimal auctionMinimumBid;
 
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDateTime auctionPostDate;

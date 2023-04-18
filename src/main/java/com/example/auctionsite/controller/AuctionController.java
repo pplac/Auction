@@ -11,10 +11,10 @@ import com.example.auctionsite.service.AuctionItemService;
 import com.example.auctionsite.service.AuctionService;
 import com.example.auctionsite.service.BidService;
 import com.example.auctionsite.service.CustomerService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -22,34 +22,33 @@ public class AuctionController {
 
     private AuctionService auctionService;
     private AuctionItemService auctionItemService;
-
     private CustomerService customerService;
-
     private BidService bidService;
 
 
+    @PostMapping("/")
+    public void getAuctionList(Model model) {
+        List<AuctionModel> auctionModelList = auctionService.getAllAuctions();
+        model.addAttribute("auctionModel", auctionModelList);
+//        return?
+    }
 
+    @PostMapping
+    public void getCreateAuction(@RequestBody CreateAuctionRequest request) {
 
-    public void postAuction(@RequestBody CreateAuctionRequest request) {
-
-        CustomerModel customer = customerService.getCustomerById(request.getCustomerModelId());
+        CustomerModel customer = customerService.getCustomerById(request.getAuctionCustomerOwnerId());
         AuctionItemModel auctionItem = auctionItemService.getAuctionItemById(request.getAuctionModelId());
         AuctionModel auction = AuctionModel.builder()
                 .auctionId(request.getAuctionModelId())
+                .auctionCustomerOwnerId(customer)
                 .auctionMinimumBid(request.getAuctionMinimumBid())
                 .auctionPostDate(request.getAuctionPostDate())
                 .auctionEndDate(request.getAuctionEndDate())
-                .auctionBids((Set<BidModel>) request.getAuctionBid())
+                .auctionBids(request.getAuctionBids())
                 .auctionItemModel(auctionItem)
-                .auctionCustomerList(request.a)
+                .auctionCustomerList(request.getAuctionCustomerList())
                 .build();
-
-
-
-    }
-
-    public void getAllAuction() {
-
+        auctionService.createAuction(auction);
     }
 
     @PostMapping
@@ -66,16 +65,19 @@ public class AuctionController {
         bidService.createBid(bid);
     }
 
-    public void getEditAuction() {
 
-    }
+//    public void getEditAuction() {
+//
+//    }
+//
+//    public void postEditAuction() {
+//
+//    }
 
-    public void postEditAuction() {
-
-    }
-
-    public void deleteAuction() {
-
+    @PostMapping
+    public void deleteAuction(@PathVariable("id") Long auctionId) {
+        auctionService.deleteAuction(auctionId);
+//        return;?
     }
 
 }

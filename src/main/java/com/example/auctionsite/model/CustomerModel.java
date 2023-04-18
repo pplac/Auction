@@ -36,6 +36,8 @@ public class CustomerModel implements UserDetails {
 
     @PostalCode
     private String customerPostalCode;
+    @OneToOne
+    private AuctionModel customerAuctionOwnerId;
 
     @ManyToMany
     private List<AuctionModel> customerAuctionList;
