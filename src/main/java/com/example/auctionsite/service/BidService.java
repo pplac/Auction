@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -18,10 +19,10 @@ import java.util.*;
 public class BidService {
 
 //    Map<CustomerModel, BidModel> bids = new HashMap<>();
-    Set<BidModel> bids = new HashSet<>();
-
+    private Set<BidModel> bids = new HashSet<>();
     private final BidRepository bidRepository;
     private CustomerModel customerModel;
+
 
     public BidModel createBid(BidModel bid) {
         return bidRepository.save(bid);
@@ -31,12 +32,11 @@ public class BidService {
         return bidRepository.findAllByBidId(bidId)
                 .orElseThrow(() -> new BidNotFoundException("Bid not found: " + bidId));
     }
-
-    public BigDecimal getWinningBid() {
-        return bids.stream()
+//
+    public BidModel getWinningBid(Set<BidModel> winningBid) {
+        return winningBid.stream()
                 .max(Comparator.comparing(BidModel::getBidAmount))
-                .get().getBidAmount();
-
+                .orElseThrow();
     }
 
     public void deleteBid(Long bidId) {

@@ -5,9 +5,12 @@ import com.example.auctionsite.model.AuctionItemModel;
 import com.example.auctionsite.model.AuctionModel;
 import com.example.auctionsite.model.BidModel;
 import com.example.auctionsite.model.CustomerModel;
+import com.example.auctionsite.model.enums.Categories;
 import com.example.auctionsite.model.enums.Role;
 import com.example.auctionsite.request.CreateAuctionRequest;
+import com.example.auctionsite.request.CreateBidRequest;
 import com.example.auctionsite.request.EditAuctionWithBidRequest;
+import com.example.auctionsite.request.GetAuctionByCategoryRequest;
 import com.example.auctionsite.service.AuctionItemService;
 import com.example.auctionsite.service.AuctionService;
 import com.example.auctionsite.service.BidService;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 public class AuctionController {
@@ -33,6 +37,15 @@ public class AuctionController {
         return auctionService.getAllAuctions();
     }
 
+    @PostMapping("/byCategory")
+    public List<AuctionModel> getAuctionByCategory(@RequestBody GetAuctionByCategoryRequest request){
+        return auctionService.getAuctionByCategories(request.getAuctionItemCategory());
+    }
+//
+//    public void getAuctionByKeyword() {
+//
+//    }
+
     @PostMapping
     public void getCreateAuction(@RequestBody CreateAuctionRequest request) {
         auctionService.createAuction(request);
@@ -44,7 +57,11 @@ public class AuctionController {
         auctionService.editAuctionWithBid(request);
     }
 
-    public
+//
+//    @PostMapping
+//    public List<AuctionService> getCustomerWinningAuction(@RequestBody CreateBidRequest request) {
+//        List
+
 
 
 //    public void getEditAuction() {
@@ -55,10 +72,10 @@ public class AuctionController {
 //
 //    }
 
-    @PostMapping
+//
+    @DeleteMapping("/{id}")
     public void deleteAuction(@PathVariable("id") Long auctionId) {
         auctionService.deleteAuction(auctionId);
-//        return;?
     }
 
 }

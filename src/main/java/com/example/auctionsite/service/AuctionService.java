@@ -4,6 +4,7 @@ import com.example.auctionsite.model.AuctionItemModel;
 import com.example.auctionsite.model.AuctionModel;
 import com.example.auctionsite.model.BidModel;
 import com.example.auctionsite.model.CustomerModel;
+import com.example.auctionsite.model.enums.Categories;
 import com.example.auctionsite.repositories.AuctionRepository;
 import com.example.auctionsite.request.CreateAuctionRequest;
 import com.example.auctionsite.request.CreateBidRequest;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -48,10 +50,6 @@ public class AuctionService {
         return auctionRepository.findAll();
     }
 
-    public List<AuctionModel> getAllCustomerAuctionsList(final Long customerId) {
-        return auctionRepository.findAllByCustomerAuctionList(customerId);
-
-    }
 
     public void editAuctionWithBid(EditAuctionWithBidRequest request) {
         CustomerModel customer = customerService.getCustomerById(request.getCustomerModelId());
@@ -68,9 +66,13 @@ public class AuctionService {
         auctionRepository.save(auction);
     }
 
-    public AuctionModel getAuctionWinner(CreateBidRequest request) {
-
-    }
+    //
+//    public CustomerModel getWinningBid(AuctionModel auctionModel) {
+//        Set<BidModel> auctionBids = auctionModel.getAuctionBids();
+//        BidModel winningBid = bidService.getWinningBid(auctionBids);
+//
+//        return winningBid.getCustomerModelId();
+//    }
 
     public AuctionModel getAuctionById(Long id) {
         Optional<AuctionModel> auction = auctionRepository.findById(id);
@@ -80,10 +82,26 @@ public class AuctionService {
             log.info("nie ma takiej aukcji");
             return null;
         }
-//        auction.ifPresentOrElse(auctionModel -> auctionRepository.findById(id), () -> log.info("nie ma takiej aukcji"));
-//        return null;
     }
 
+    public List<AuctionModel> getAuctionByCategories(Categories categories) {
+        List<AuctionModel> allAuctionsByCategory = auctionRepository.findAllByCategories(categories);
+        return allAuctionsByCategory.stream()
+                .filter(auctionItem -> auctionItem.getAuctionItemModel().getAuctionItemCategory() == categories)
+                .collect(Collectors.toList());
+
+    }
+
+//        auction.ifPresentOrElse(auctionModel -> auctionRepository.findById(id), () -> log.info("nie ma takiej aukcji"));
+//        return null;
+
+
+    //
+    public List<AuctionModel> getAuctionByKeyword(String keyword) {
+        return auctionRepository.findAllByAuctionTitleContains(keyword);
+    }
+
+    //
     public void deleteAuction(Long id) {
         auctionRepository.deleteById(id);
     }

@@ -46,17 +46,12 @@ public class AuctionItemService {
     public List<AuctionItemModel> getAuctionItemList() {
         return auctionItemRepository.findAll();
     }
-
-    public void addAuctionItem(AuctionItemModel auctionItem) {
-        auctionItemRepository.save(auctionItem);
-    }
-
-    public AuctionItemModel getAuctionItemByCategories(Categories categories) {
-        Optional<AuctionItemModel> auctionItemModel = auctionItemRepository.findByCategories(categories);
+//
+    public void getAuctionItemByCategories(Categories categories) {
+        List<AuctionItemModel> auctionItemModel = auctionItemRepository.findByCategories(categories);
         auctionItemModel.stream()
                 .filter(auctionItem -> auctionItem.getAuctionItemCategory() == categories)
                 .collect(Collectors.toList());
-        return null;
     }
 
     public void deleteAuctionItem(Long id) {
