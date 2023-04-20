@@ -14,13 +14,8 @@ import java.util.Optional;
 public interface AuctionRepository extends JpaRepository<AuctionModel, Long> {
 
     Page<AuctionModel> findAll(Pageable pageable);
-
     List<AuctionModel> findAllByCategories(Categories category);
-
-
-
     List<AuctionModel> findAllByAuctionTitleContains(String keyword);
-
     List<AuctionModel> findAllByAuctionIsActive (boolean active);
 
 }

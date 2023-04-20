@@ -19,8 +19,6 @@ public class AuctionItemService {
 
     private final AuctionItemRepository auctionItemRepository;
 
-
-
     public AuctionItemModel createAuctionItem(CreateAuctionItemRequest request) {
 
         AuctionItemModel auctionItem = AuctionItemModel.builder()
@@ -43,16 +41,10 @@ public class AuctionItemService {
         }
     }
 
-    public List<AuctionItemModel> getAuctionItemList() {
-        return auctionItemRepository.findAll();
-    }
-//
-    public void getAuctionItemByCategories(Categories categories) {
-        List<AuctionItemModel> auctionItemModel = auctionItemRepository.findByCategories(categories);
-        auctionItemModel.stream()
-                .filter(auctionItem -> auctionItem.getAuctionItemCategory() == categories)
-                .collect(Collectors.toList());
-    }
+//    public List<AuctionItemModel> getCustomerAuctionList() {
+//        List<AuctionItemModel>
+//        return auctionItemRepository.findAll();
+//    }
 
     public void deleteAuctionItem(Long id) {
         auctionItemRepository.deleteById(id);

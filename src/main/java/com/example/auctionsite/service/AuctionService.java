@@ -6,13 +6,12 @@ import com.example.auctionsite.model.BidModel;
 import com.example.auctionsite.model.CustomerModel;
 import com.example.auctionsite.model.enums.Categories;
 import com.example.auctionsite.repositories.AuctionRepository;
-import com.example.auctionsite.request.CreateAuctionRequest;
-import com.example.auctionsite.request.CreateBidRequest;
-import com.example.auctionsite.request.EditAuctionWithBidRequest;
+import com.example.auctionsite.request.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -37,10 +36,11 @@ public class AuctionService {
         AuctionModel auction = AuctionModel.builder()
                 .auctionCustomerOwnerId(customer)
                 .auctionMinimumBid(request.getAuctionMinimumBid())
-                .auctionPostDate(request.getAuctionPostDate())
+                .auctionPostDate(LocalDateTime.now())
                 .auctionEndDate(request.getAuctionEndDate())
                 .auctionBids(Set.of())
                 .auctionItemModel(auctionItem)
+                .auctionCustomerList(Set.of())
                 .build();
 
         return auctionRepository.save(auction);
@@ -48,6 +48,13 @@ public class AuctionService {
 
     public List<AuctionModel> getAllAuctions() {
         return auctionRepository.findAll();
+    }
+///////////
+    public List<AuctionModel> getAllAuctionCustomers(GetAllAuctionOrCustomers request) {
+        List<AuctionModel> auctionCustomerList = auctionService.getAllAuctions();
+        return auctionCustomerList.stream()
+                .filter(customers -> customerService. == request.getAuctionId())
+                .toList();
     }
 
 
@@ -66,7 +73,6 @@ public class AuctionService {
         auctionRepository.save(auction);
     }
 
-    //
 //    public CustomerModel getWinningBid(AuctionModel auctionModel) {
 //        Set<BidModel> auctionBids = auctionModel.getAuctionBids();
 //        BidModel winningBid = bidService.getWinningBid(auctionBids);
@@ -89,22 +95,16 @@ public class AuctionService {
         return allAuctionsByCategory.stream()
                 .filter(auctionItem -> auctionItem.getAuctionItemModel().getAuctionItemCategory() == categories)
                 .collect(Collectors.toList());
-
     }
 
 //        auction.ifPresentOrElse(auctionModel -> auctionRepository.findById(id), () -> log.info("nie ma takiej aukcji"));
 //        return null;
 
+//    public List<AuctionModel> getAuctionByKeyword(String keyword) {
+//        return auctionRepository.findAllByAuctionTitleContains(keyword);
+//    }
 
-    //
-    public List<AuctionModel> getAuctionByKeyword(String keyword) {
-        return auctionRepository.findAllByAuctionTitleContains(keyword);
-    }
-
-    //
     public void deleteAuction(Long id) {
         auctionRepository.deleteById(id);
     }
-
-
 }

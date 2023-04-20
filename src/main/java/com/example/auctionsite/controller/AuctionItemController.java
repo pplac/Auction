@@ -7,15 +7,18 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class AuctionItemController {
 
-    private AuctionItemService auctionItemService;
 
-    @PostMapping
-    public void getCreateAuctionItem(@RequestBody CreateAuctionItemRequest request){
-        auctionItemService.createAuctionItem(request);
-    }
+//    niepotrzebne
 
-    @PostMapping
-    public void deleteAuctionItem(@PathVariable("id") Long auctionItemId) {
-        auctionItemService.deleteAuctionItem(auctionItemId);
-    }
+//    private AuctionItemService auctionItemService;
+//
+//    @PostMapping
+//    public void getCreateAuctionItem(@RequestBody CreateAuctionItemRequest request){
+//        auctionItemService.createAuctionItem(request);
+//    }
+//
+//    @PostMapping
+//    public void deleteAuctionItem(@PathVariable("id") Long auctionItemId) {
+//        auctionItemService.deleteAuctionItem(auctionItemId);
+//    }
 }

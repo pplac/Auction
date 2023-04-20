@@ -7,10 +7,7 @@ import com.example.auctionsite.model.BidModel;
 import com.example.auctionsite.model.CustomerModel;
 import com.example.auctionsite.model.enums.Categories;
 import com.example.auctionsite.model.enums.Role;
-import com.example.auctionsite.request.CreateAuctionRequest;
-import com.example.auctionsite.request.CreateBidRequest;
-import com.example.auctionsite.request.EditAuctionWithBidRequest;
-import com.example.auctionsite.request.GetAuctionByCategoryRequest;
+import com.example.auctionsite.request.*;
 import com.example.auctionsite.service.AuctionItemService;
 import com.example.auctionsite.service.AuctionService;
 import com.example.auctionsite.service.BidService;
@@ -24,6 +21,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/auction")
 public class AuctionController {
 
     private AuctionService auctionService;
@@ -41,27 +39,34 @@ public class AuctionController {
     public List<AuctionModel> getAuctionByCategory(@RequestBody GetAuctionByCategoryRequest request){
         return auctionService.getAuctionByCategories(request.getAuctionItemCategory());
     }
-//
-//    public void getAuctionByKeyword() {
-//
-//    }
+//////////
+    @PostMapping("/auctionCustomers")
+    public Set<CustomerModel> getAuctionCustomers(@RequestBody GetAllAuctionOrCustomers request){
+        return auctionService.getAllAuctionCustomers(request);
+    }
 
-    @PostMapping
-    public void getCreateAuction(@RequestBody CreateAuctionRequest request) {
+    @PostMapping("/addAuction")
+    public void createAuction(@RequestBody CreateAuctionRequest request) {
         auctionService.createAuction(request);
 
     }
 
-    @PostMapping
+    @PostMapping("/addAuctionBid")
     public void editAuctionWithBid(@RequestBody EditAuctionWithBidRequest request) {
         auctionService.editAuctionWithBid(request);
     }
+
+    @DeleteMapping("/deleteAuction/{id}")
+    public void deleteAuction(@PathVariable("id") Long auctionId) {
+        auctionService.deleteAuction(auctionId);
+    }
+}
+
 
 //
 //    @PostMapping
 //    public List<AuctionService> getCustomerWinningAuction(@RequestBody CreateBidRequest request) {
 //        List
-
 
 
 //    public void getEditAuction() {
@@ -72,10 +77,8 @@ public class AuctionController {
 //
 //    }
 
-//
-    @DeleteMapping("/{id}")
-    public void deleteAuction(@PathVariable("id") Long auctionId) {
-        auctionService.deleteAuction(auctionId);
-    }
 
-}
+//
+//    public void getAuctionByKeyword() {
+//
+//    }

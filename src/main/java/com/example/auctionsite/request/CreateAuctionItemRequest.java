@@ -1,5 +1,6 @@
 package com.example.auctionsite.request;
 
+import com.example.auctionsite.model.CustomerModel;
 import com.example.auctionsite.model.enums.Categories;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

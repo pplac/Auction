@@ -5,6 +5,7 @@ import com.example.auctionsite.model.AuctionItemModel;
 import com.example.auctionsite.model.AuctionModel;
 import com.example.auctionsite.model.BidModel;
 import com.example.auctionsite.model.CustomerModel;
+import com.example.auctionsite.model.enums.Categories;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,12 @@ public class CreateAuctionRequest {
     LocalDateTime auctionEndDate;
     Set<BidModel> auctionBids;
     Long auctionItemModelId;
+
+    String auctionItemTitle;
+    Categories auctionItemCategory;
+    String auctionItemDescription;
+    BigDecimal auctionItemInitCost;
+
     Set<CustomerModel> auctionCustomerList;
 
 

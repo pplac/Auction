@@ -9,9 +9,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class CustomerWinningAuctionRequest {
+public class GetAllAuctionOrCustomers {
 
-    Long customerId;
     Long auctionId;
+    Long customerId;
 
 }

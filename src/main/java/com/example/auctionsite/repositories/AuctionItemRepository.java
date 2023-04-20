@@ -13,9 +13,7 @@ public interface AuctionItemRepository extends JpaRepository<AuctionItemModel, L
 
 
         Page<AuctionItemModel> findAllBy(Pageable pageable);
-
         List<AuctionItemModel> findByCategories(Categories category);
-
         List<AuctionItemModel> findByTitle(String title);
 
 }

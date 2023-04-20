@@ -32,6 +32,6 @@ public class AuctionItemModel {
     private AuctionModel auctionModel;
 
     @ManyToOne
-    private CustomerModel auctionItemCustomer;
+    private CustomerModel auctionItemOwnerCustomer;
 
 }

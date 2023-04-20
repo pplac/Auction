@@ -39,10 +39,4 @@ public class BidService {
                 .orElseThrow();
     }
 
-    public void deleteBid(Long bidId) {
-        bidRepository.deleteById(bidId);
-
-    }
-
-
 }

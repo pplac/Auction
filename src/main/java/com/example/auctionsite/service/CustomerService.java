@@ -1,11 +1,14 @@
 package com.example.auctionsite.service;
 
+import com.example.auctionsite.model.AuctionItemModel;
 import com.example.auctionsite.model.AuctionModel;
 import com.example.auctionsite.model.CustomerModel;
 import com.example.auctionsite.model.enums.Role;
 import com.example.auctionsite.repositories.CustomerRepository;
 import com.example.auctionsite.request.CreateCustomerRequest;
+import com.example.auctionsite.request.CustomerWinningAuctionRequest;
 import com.example.auctionsite.request.EditCustomerRequest;
+import com.example.auctionsite.request.GetAllAuctionOrCustomers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +28,8 @@ public class CustomerService implements UserDetailsService {
 
     @Autowired
     private CustomerRepository customerRepository;
-
     private AuctionModel auctionModel;
+    private AuctionService auctionService;
 
     @Override
     public UserDetails loadUserByUsername(String customerName) throws UsernameNotFoundException {
@@ -59,16 +62,14 @@ public class CustomerService implements UserDetailsService {
         return customer.getCustomerName().length() == 0;
     }
 
-    //
-//    public List<AuctionModel> getAllCustomerAuctionsList(final Long customerId) {
-//        return customerRepository.findAllByCustomerAuctionList(customerId);
-//    }
-//
-//    public CustomerModel editCustomer(EditCustomerRequest request) {
-//        CustomerModel editCustomer = CustomerModel.builder()
-//                .customerName(request.getCustomerName().replace())
-//                .build();
-//    }
+///////////////
+    public List<AuctionModel> getCustomerAuctionList(GetAllAuctionOrCustomers request) {
+        List<AuctionModel> customerAuctionList = auctionService.getAllAuctions();
+        return customerAuctionList.stream()
+                .filter(customerAuctions -> auctionService. == request.getCustomerId())
+                .toList();
+    }
+
 
     public List<CustomerModel> getAllCustomers() {
         return customerRepository.findAll();
@@ -92,5 +93,10 @@ public class CustomerService implements UserDetailsService {
         customerRepository.deleteById(id);
     }
 
-
 }
+
+//    public CustomerModel editCustomer(EditCustomerRequest request) {
+//        CustomerModel editCustomer = CustomerModel.builder()
+//                .customerName(request.getCustomerName().replace())
+//                .build();
+//    }
