@@ -50,11 +50,9 @@ public class AuctionService {
         return auctionRepository.findAll();
     }
 ///////////
-    public List<AuctionModel> getAllAuctionCustomers(GetAllAuctionOrCustomers request) {
-        List<AuctionModel> auctionCustomerList = auctionService.getAllAuctions();
-        return auctionCustomerList.stream()
-                .filter(customers -> customerService. == request.getAuctionId())
-                .toList();
+    public Set<CustomerModel> getAllAuctionCustomers(GetAllAuctionOrCustomers request) {
+        AuctionModel customerAuction = auctionService.getAuctionById(request.getAuctionId());
+        return customerAuction.getAuctionCustomerList();
     }
 
 
@@ -70,6 +68,7 @@ public class AuctionService {
 
         BidModel bidModel = bidService.createBid(bid);
         auction.getAuctionBids().add(bidModel);
+        auction.getAuctionCustomerList().add(customer);
         auctionRepository.save(auction);
     }
 
@@ -91,7 +90,7 @@ public class AuctionService {
     }
 
     public List<AuctionModel> getAuctionByCategories(Categories categories) {
-        List<AuctionModel> allAuctionsByCategory = auctionRepository.findAllByCategories(categories);
+        List<AuctionModel> allAuctionsByCategory = auctionRepository.findAll();
         return allAuctionsByCategory.stream()
                 .filter(auctionItem -> auctionItem.getAuctionItemModel().getAuctionItemCategory() == categories)
                 .collect(Collectors.toList());

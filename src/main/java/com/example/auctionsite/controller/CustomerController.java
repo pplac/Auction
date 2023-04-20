@@ -7,19 +7,21 @@ import com.example.auctionsite.service.AuctionItemService;
 import com.example.auctionsite.service.AuctionService;
 import com.example.auctionsite.service.BidService;
 import com.example.auctionsite.service.CustomerService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/customer")
 public class CustomerController {
 
-    private CustomerService customerService;
-    private AuctionService auctionService;
-    private AuctionItemService auctionItemService;
-    private BidService bidService;
+    private final CustomerService customerService;
+    private final AuctionService auctionService;
+    private final AuctionItemService auctionItemService;
+    private final BidService bidService;
 
     @PostMapping("/addCustomer")
     public void createCustomer(@RequestBody CreateCustomerRequest request) {
@@ -48,14 +50,18 @@ public class CustomerController {
     public void deleteCustomer(@PathVariable("id") Long customerId) {
         customerService.deleteCustomer(customerId);
     }
+///////////
+    @GetMapping
+    public void getEditCustomer(@PathVariable("id") Long cusromerId,
+                                @RequestBody EditCustomerRequest request) {
+    }
+
+
 }
 
 
-//
-//    @GetMapping
-//    public void getEditCustomer(@PathVariable("id") Long cusromerId,
-//                                @RequestBody EditCustomerRequest request) {
-//    }
+
+
 
 //    public void postEditCustomer() {
 //    }

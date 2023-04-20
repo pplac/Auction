@@ -66,9 +66,17 @@ public class CustomerService implements UserDetailsService {
     public List<AuctionModel> getCustomerAuctionList(GetAllAuctionOrCustomers request) {
         List<AuctionModel> customerAuctionList = auctionService.getAllAuctions();
         return customerAuctionList.stream()
-                .filter(customerAuctions -> auctionService. == request.getCustomerId())
+                .filter(customerAuction -> customerAuction.getAuctionCustomerList().stream()
+                        .anyMatch(customer -> customer.getCustomerId().equals(request.getCustomerId())))
                 .toList();
     }
+    //////////
+    public void editCustomerRole(Long customerId) {
+        CustomerModel customerChange = customerRepository.findById(customerId).orElseThrow(() ->new RuntimeException());
+        customerChange.getCustomerRoles().add(Role.ROLE_SELLER);
+        customerRepository.save(customerChange);
+    }
+
 
 
     public List<CustomerModel> getAllCustomers() {
@@ -95,8 +103,3 @@ public class CustomerService implements UserDetailsService {
 
 }
 
-//    public CustomerModel editCustomer(EditCustomerRequest request) {
-//        CustomerModel editCustomer = CustomerModel.builder()
-//                .customerName(request.getCustomerName().replace())
-//                .build();
-//    }

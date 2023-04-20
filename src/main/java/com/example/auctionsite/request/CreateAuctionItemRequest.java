@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-@NoArgsConstructor
+
 @RequiredArgsConstructor
 public class CreateAuctionItemRequest {
 

@@ -32,7 +32,7 @@ public class CustomerModel implements UserDetails {
 
     private String customerPassword;
 
-    @EmailApp
+//    @EmailApp
     private String customerEmail;
 
     @PostalCode

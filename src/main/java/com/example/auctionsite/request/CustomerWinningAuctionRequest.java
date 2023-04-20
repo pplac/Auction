@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
+
 @RequiredArgsConstructor
 public class CustomerWinningAuctionRequest {
 
