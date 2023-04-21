@@ -26,11 +26,5 @@ public class CreateCustomerRequest {
     String customerPassword;
     String customerEmail;
     String customerPostalCode;
-    List<AuctionModel> customerAuctionOwnerList;
-    List<AuctionModel> customerAuctionList;
-    Set<BidModel> customerBids;
-    List<AuctionItemModel> customerItemsWon;
-    Set<Role> customerRoles;
-
 
 }

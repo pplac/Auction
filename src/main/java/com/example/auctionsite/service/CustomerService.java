@@ -1,13 +1,13 @@
 package com.example.auctionsite.service;
 
-import com.example.auctionsite.model.AuctionItemModel;
+import com.example.auctionsite.exeption.CreateCustomerException;
+import com.example.auctionsite.exeption.CustomerNotFoundException;
+import com.example.auctionsite.exeption.EmptyListException;
 import com.example.auctionsite.model.AuctionModel;
 import com.example.auctionsite.model.CustomerModel;
 import com.example.auctionsite.model.enums.Role;
 import com.example.auctionsite.repositories.CustomerRepository;
 import com.example.auctionsite.request.CreateCustomerRequest;
-import com.example.auctionsite.request.CustomerWinningAuctionRequest;
-import com.example.auctionsite.request.EditCustomerRequest;
 import com.example.auctionsite.request.GetAllAuctionOrCustomers;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -38,6 +39,15 @@ public class CustomerService implements UserDetailsService {
         return customer.orElseThrow(() -> new UsernameNotFoundException("Customer not found!"));
     }
 
+    public List<CustomerModel> getAllCustomers() {
+        return customerRepository.findAll();
+    }
+
+    public CustomerModel getCustomerById(final Long customerId) {
+        return customerRepository.findById(customerId)
+                .orElseThrow(() -> new CustomerNotFoundException("Customer cannot be found with id: " + customerId));
+    }
+
     public CustomerModel createCustomer(CreateCustomerRequest request) {
 
         CustomerModel customer = CustomerModel.builder()
@@ -45,57 +55,53 @@ public class CustomerService implements UserDetailsService {
                 .customerPassword(request.getCustomerPassword())
                 .customerEmail(request.getCustomerEmail())
                 .customerPostalCode(request.getCustomerPostalCode())
-                .customerAuctionOwnerList(List.of())
-                .customerAuctionList(List.of())
-                .customerBids(Set.of())
-                .customerItemsWon(List.of())
-                .customerRoles(Set.of(Role.ROLE_BUYER))
+                .customerRoles(Set.of(Role.ROLE_USER))
                 .build();
 
         if (isCustomerInvalid(customer)) {
-            throw new IllegalArgumentException();
+            throw new CreateCustomerException("Customer can not be create");
         }
         return customerRepository.save(customer);
     }
 
     private boolean isCustomerInvalid(CustomerModel customer) {
-        return customer.getCustomerName().length() == 0;
+//        return customer.getCustomerName().length() == 0;
+        boolean customerData =
+                customer.getCustomerName().length() == 0 ||
+                        customer.getCustomerPassword().length() == 0 ||
+                        customer.getCustomerEmail().length() == 0 ||
+                        customer.getCustomerPostalCode().length() == 0;
+        return customerData;
     }
 
-///////////////
-    public List<AuctionModel> getCustomerAuctionList(GetAllAuctionOrCustomers request) {
-        List<AuctionModel> customerAuctionList = auctionService.getAllAuctions();
-        return customerAuctionList.stream()
-                .filter(customerAuction -> customerAuction.getAuctionCustomerList().stream()
-                        .anyMatch(customer -> customer.getCustomerId().equals(request.getCustomerId())))
-                .toList();
+    public List<AuctionModel> getCustomerAuctionsList(Long customerId) {
+        List<AuctionModel> customerAuctionsList = auctionService.getAllAuctions();
+        customerAuctionsList.stream()
+                .filter(customerAuctions -> customerAuctions.getAuctionCustomerList().stream()
+                        .anyMatch(customer -> customer.getCustomerId() == customerId))
+                .collect(Collectors.toList());
+        if (customerAuctionsList.size() == 0) {
+            throw new EmptyListException("List is empty");
+        }
+        return customerAuctionsList;
     }
-    //////////
-    public void editCustomerRole(Long customerId) {
-        CustomerModel customerChange = customerRepository.findById(customerId).orElseThrow(() ->new RuntimeException());
-        customerChange.getCustomerRoles().add(Role.ROLE_SELLER);
+
+    public CustomerModel editCustomerRole(Long customerId) {
+        CustomerModel customerChange = customerRepository.findById(customerId)
+                .orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
+        customerChange.getCustomerRoles().add(Role.ROLE_AUCTIONEER);
         customerRepository.save(customerChange);
+        return customerChange;
     }
-
-
-
-    public List<CustomerModel> getAllCustomers() {
-        return customerRepository.findAll();
-    }
-
-    public CustomerModel getCustomerById(final Long customerId) {
-        return customerRepository.findById(customerId)
-                .orElseThrow(() -> new UsernameNotFoundException("User cannot be found with id: " + customerId));
-    }
-//
-    public CustomerModel getCustomerByEmail(String customerEmail) {
-        return customerRepository.findCustomerByCustomerEmail(customerEmail)
-                .orElseThrow(() ->new UsernameNotFoundException("User cannot be found with id: " + customerEmail));
-    }
-//
-    public List<CustomerModel> getCustomerByKeyword(String keyword) {
-        return customerRepository.findAllByCustomerNameContains(keyword);
-    }
+////
+//    public CustomerModel getCustomerByEmail(String customerEmail) {
+//        return customerRepository.findCustomerByCustomerEmail(customerEmail)
+//                .orElseThrow(() ->new UsernameNotFoundException("User cannot be found with id: " + customerEmail));
+//    }
+////
+//    public List<CustomerModel> getCustomerByKeyword(String keyword) {
+//        return customerRepository.findAllByCustomerNameContains(keyword);
+//    }
 
     public void deleteCustomer(Long id) {
         customerRepository.deleteById(id);

@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -24,17 +25,10 @@ public class CreateAuctionRequest {
 
     Long auctionCustomerOwnerId;
     BigDecimal auctionMinimumBid;
-    LocalDateTime auctionPostDate;
-    LocalDateTime auctionEndDate;
-    Set<BidModel> auctionBids;
-    Long auctionItemModelId;
-
-    String auctionItemTitle;
+    String auctionTitle;
     Categories auctionItemCategory;
     String auctionItemDescription;
     BigDecimal auctionItemInitCost;
-
-    Set<CustomerModel> auctionCustomerList;
-
+    int daysAuctionIsActive;
 
 }

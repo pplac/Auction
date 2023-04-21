@@ -10,10 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Getter
@@ -32,7 +29,7 @@ public class CustomerModel implements UserDetails {
 
     private String customerPassword;
 
-//    @EmailApp
+    @EmailApp
     private String customerEmail;
 
     @PostalCode
@@ -56,7 +53,8 @@ public class CustomerModel implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(customerRoles.toString());
+        return Collections.singleton(authority);
     }
 
     @Override

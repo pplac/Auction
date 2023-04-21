@@ -29,18 +29,19 @@ public class AuctionService {
     private AuctionItemService auctionItemService;
 
 
-    public AuctionModel createAuction(CreateAuctionRequest request) {
+    public AuctionModel createAuction(CreateAuctionRequest request, Long customerId) {
 
-        CustomerModel customer = customerService.getCustomerById(request.getAuctionCustomerOwnerId());
-        AuctionItemModel auctionItem = auctionItemService.getAuctionItemById(request.getAuctionItemModelId());
+        CustomerModel customer = customerService.getCustomerById(customerId);
         AuctionModel auction = AuctionModel.builder()
                 .auctionCustomerOwnerId(customer)
                 .auctionMinimumBid(request.getAuctionMinimumBid())
+                .auctionTitle(request.getAuctionTitle())
+                .auctionItemCategory(request.getAuctionItemCategory())
+                .auctionItemDescription(request.getAuctionItemDescription())
+                .auctionItemInitCost(request.getAuctionItemInitCost())
                 .auctionPostDate(LocalDateTime.now())
-                .auctionEndDate(request.getAuctionEndDate())
-                .auctionBids(Set.of())
-                .auctionItemModel(auctionItem)
-                .auctionCustomerList(Set.of())
+                .daysAuctionIsActive(request.getDaysAuctionIsActive())
+                .auctionEndDate(LocalDateTime.now().plusDays(request.getDaysAuctionIsActive()))
                 .build();
 
         return auctionRepository.save(auction);
@@ -49,10 +50,13 @@ public class AuctionService {
     public List<AuctionModel> getAllAuctions() {
         return auctionRepository.findAll();
     }
-///////////
-    public Set<CustomerModel> getAllAuctionCustomers(GetAllAuctionOrCustomers request) {
-        AuctionModel customerAuction = auctionService.getAuctionById(request.getAuctionId());
-        return customerAuction.getAuctionCustomerList();
+
+    public List<CustomerModel> getAuctionCustomersList(GetAllAuctionOrCustomers auctionIdRequest) {
+        List<CustomerModel> auctionCustomersList = customerService.getAllCustomers();
+        return auctionCustomersList.stream()
+                .filter(auctionCustomers -> auctionCustomers.getCustomerAuctionList().stream()
+                        .anyMatch(auction -> auction.getAuctionId().equals(auctionIdRequest.getAuctionId())))
+                .toList();
     }
 
 
@@ -92,7 +96,7 @@ public class AuctionService {
     public List<AuctionModel> getAuctionByCategories(Categories categories) {
         List<AuctionModel> allAuctionsByCategory = auctionRepository.findAll();
         return allAuctionsByCategory.stream()
-                .filter(auctionItem -> auctionItem.getAuctionItemModel().getAuctionItemCategory() == categories)
+                .filter(auctionItem -> auctionItem.getAuctionItemCategory() == categories)
                 .collect(Collectors.toList());
     }
 

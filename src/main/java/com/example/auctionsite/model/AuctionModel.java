@@ -1,6 +1,7 @@
 package com.example.auctionsite.model;
 
 
+import com.example.auctionsite.model.enums.Categories;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -26,24 +27,21 @@ public class AuctionModel {
     private Long auctionId;
     @ManyToOne
     private CustomerModel auctionCustomerOwnerId;
-
     private BigDecimal auctionMinimumBid;
-
+    private String auctionTitle;
+    private Categories auctionItemCategory;
+    @Column(name = "description")
+    private String auctionItemDescription;
+    private BigDecimal auctionItemInitCost;
+    private int daysAuctionIsActive;
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDateTime auctionPostDate;
-
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDateTime auctionEndDate;
-
-    @OneToOne
-    private AuctionItemModel auctionItemModel;
-
     @ManyToMany
     private Set<CustomerModel> auctionCustomerList;
-
     @OneToMany
     private Set<BidModel> auctionBids = new HashSet<>();
-
     private boolean auctionIsActive;
 
 }

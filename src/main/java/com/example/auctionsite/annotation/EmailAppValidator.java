@@ -11,8 +11,7 @@ public class EmailAppValidator implements ConstraintValidator<EmailApp, String> 
     @Override
     public boolean isValid(String emailApp, ConstraintValidatorContext constraintValidatorContext) {
 
-        final Pattern emailAppPattern = Pattern.compile("\"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@\"\n" +
-                      "+ \"[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$\"");
+        final Pattern emailAppPattern = Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
         final Matcher matcher = emailAppPattern.matcher(emailApp);
 
 
