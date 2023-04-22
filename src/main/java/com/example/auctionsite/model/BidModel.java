@@ -17,17 +17,11 @@ public class BidModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bidId;
-
     private BigDecimal bidAmount;
-
     private LocalDateTime bidDate;
-
     @ManyToOne
     private AuctionModel auctionModelId;
-
     @ManyToOne
     private CustomerModel customerModelId;
-
-
 
 }

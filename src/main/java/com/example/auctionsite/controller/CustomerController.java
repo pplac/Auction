@@ -1,11 +1,9 @@
 package com.example.auctionsite.controller;
 
 
-import com.example.auctionsite.exeption.EmptyListException;
 import com.example.auctionsite.model.AuctionModel;
 import com.example.auctionsite.model.CustomerModel;
 import com.example.auctionsite.request.*;
-import com.example.auctionsite.service.AuctionItemService;
 import com.example.auctionsite.service.AuctionService;
 import com.example.auctionsite.service.BidService;
 import com.example.auctionsite.service.CustomerService;
@@ -22,7 +20,6 @@ public class CustomerController {
 
     private final CustomerService customerService;
     private final AuctionService auctionService;
-    private final AuctionItemService auctionItemService;
     private final BidService bidService;
 
     @GetMapping("/getAllCustomers")
@@ -43,35 +40,26 @@ public class CustomerController {
     public void createCustomer(@RequestBody CreateCustomerRequest request) {
         customerService.createCustomer(request);
     }
-
-    @GetMapping("/getAuctionListFor/{id}")
-    public List<AuctionModel> getCustomerAuctionList(@PathVariable("id") Long customerId,
-                                                     @RequestBody GetAllAuctionOrCustomers request) {
-        if (customerService.getCustomerAuctionsList(customerId).size() == 0) {
-            throw new EmptyListException("List is empty");
-        }
-        return customerService.getCustomerAuctionsList(customerId);
+/////////////////Cannot invoke "com.example.auctionsite.service.AuctionService.getAllAuctions()"
+// because "this.auctionService" is null
+    @GetMapping("/getCustomerAuctionsListById")
+    public List<AuctionModel> getCustomerAuctionList(@RequestBody GetAllAuctionsForCustomer request) {
+        return customerService.getCustomerAuctionsList(request);
     }
-
+//pozniej
     @GetMapping("/getCustomerWinAuction/{id}")
     public List<AuctionModel> getCustomerWinAuction(@PathVariable("id") Long id,
-                                                    @RequestBody GetAllAuctionOrCustomers request) {
+                                                    @RequestBody GetAllAuctionsForCustomer request) {
         List<AuctionModel> customerAuctions = auctionService.getAllAuctions();
         return customerAuctions.stream()
                 .filter(auction -> bidService.getWinningBid(auction.getAuctionBids()).getCustomerModelId().getCustomerId() == request.getCustomerId())
                 .collect(Collectors.toList());
     }
-
-    @PostMapping("/createItem")
-    public void createAuctionItem(@RequestBody CreateAuctionItemRequest request) {
-        auctionItemService.createAuctionItem(request);
-    }
-
+//////////////////
     @PostMapping("/deleteCustomer/{id}")
     public void deleteCustomer(@PathVariable("id") Long customerId) {
         customerService.deleteCustomer(customerId);
     }
-
 
 }
 

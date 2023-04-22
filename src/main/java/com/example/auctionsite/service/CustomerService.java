@@ -8,7 +8,7 @@ import com.example.auctionsite.model.CustomerModel;
 import com.example.auctionsite.model.enums.Role;
 import com.example.auctionsite.repositories.CustomerRepository;
 import com.example.auctionsite.request.CreateCustomerRequest;
-import com.example.auctionsite.request.GetAllAuctionOrCustomers;
+import com.example.auctionsite.request.GetAllAuctionsForCustomer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +48,7 @@ public class CustomerService implements UserDetailsService {
                 .orElseThrow(() -> new CustomerNotFoundException("Customer cannot be found with id: " + customerId));
     }
 
-    public CustomerModel createCustomer(CreateCustomerRequest request) {
+    public void createCustomer(CreateCustomerRequest request) {
 
         CustomerModel customer = CustomerModel.builder()
                 .customerName(request.getCustomerName())
@@ -61,7 +61,7 @@ public class CustomerService implements UserDetailsService {
         if (isCustomerInvalid(customer)) {
             throw new CreateCustomerException("Customer can not be create");
         }
-        return customerRepository.save(customer);
+        customerRepository.save(customer);
     }
 
     private boolean isCustomerInvalid(CustomerModel customer) {
@@ -73,19 +73,19 @@ public class CustomerService implements UserDetailsService {
                         customer.getCustomerPostalCode().length() == 0;
         return customerData;
     }
-
-    public List<AuctionModel> getCustomerAuctionsList(Long customerId) {
-        List<AuctionModel> customerAuctionsList = auctionService.getAllAuctions();
-        customerAuctionsList.stream()
+///////////////
+    public List<AuctionModel> getCustomerAuctionsList(GetAllAuctionsForCustomer request) {
+        List<AuctionModel> allAuctions = auctionService.getAllAuctions();
+        allAuctions.stream()
                 .filter(customerAuctions -> customerAuctions.getAuctionCustomerList().stream()
-                        .anyMatch(customer -> customer.getCustomerId() == customerId))
+                        .anyMatch(customer -> customer.getCustomerId().equals(request.getCustomerId())))
                 .collect(Collectors.toList());
-        if (customerAuctionsList.size() == 0) {
+        if (allAuctions.size() == 0) {
             throw new EmptyListException("List is empty");
         }
-        return customerAuctionsList;
+        return allAuctions;
     }
-
+////////////////
     public CustomerModel editCustomerRole(Long customerId) {
         CustomerModel customerChange = customerRepository.findById(customerId)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer not found"));

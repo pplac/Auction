@@ -6,13 +6,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-
 @RequiredArgsConstructor
-public class CreateCustomerRequest {
+public class GetAllAuctionsForCustomer {
 
-    String customerName;
-    String customerPassword;
-    String customerEmail;
-    String customerPostalCode;
-
+    Long customerId;
 }
