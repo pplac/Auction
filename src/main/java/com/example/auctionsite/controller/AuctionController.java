@@ -23,12 +23,11 @@ public class AuctionController {
     private final CustomerService customerService;
     private final BidService bidService;
 
-/////////////////////nie działą
     @PostMapping("/addAuction")
     public void createAuction(@RequestBody CreateAuctionRequest request) {
         auctionService.createAuction(request);
     }
-/////////////////////////
+
     @GetMapping("/getAll")
     public List<AuctionModel> getAuctionList() {
         return auctionService.getAllAuctions();

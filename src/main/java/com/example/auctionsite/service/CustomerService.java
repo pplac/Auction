@@ -43,7 +43,7 @@ public class CustomerService implements UserDetailsService {
         return customerRepository.findAll();
     }
 
-    public CustomerModel getCustomerById(final Long customerId) {
+    public CustomerModel getCustomerById(Long customerId) {
         return customerRepository.findById(customerId)
                 .orElseThrow(() -> new CustomerNotFoundException("Customer cannot be found with id: " + customerId));
     }

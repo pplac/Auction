@@ -23,6 +23,7 @@ public class AuctionService {
 
     @Autowired
     private AuctionRepository auctionRepository;
+    @Autowired
     private CustomerService customerService;
     private BidService bidService;
 
