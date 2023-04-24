@@ -25,7 +25,9 @@ public class AuctionService {
     private AuctionRepository auctionRepository;
     @Autowired
     private CustomerService customerService;
+    @Autowired
     private BidService bidService;
+
 
     public AuctionModel createAuction(CreateAuctionRequest request) {
 
@@ -40,6 +42,7 @@ public class AuctionService {
                 .auctionPostDate(LocalDateTime.now())
                 .daysAuctionIsActive(request.getDaysAuctionIsActive())
                 .auctionEndDate(LocalDateTime.now().plusDays(request.getDaysAuctionIsActive()))
+                .auctionIsActive(LocalDateTime.now().plusDays(request.getDaysAuctionIsActive()).isAfter(LocalDateTime.now()))
                 .build();
 
         return auctionRepository.save(auction);
@@ -48,31 +51,32 @@ public class AuctionService {
     public List<AuctionModel> getAllAuctions() {
         return auctionRepository.findAll();
     }
-
-    public List<CustomerModel> getAuctionAllCustomersList(GetAllCustomersForAuction auctionIdRequest) {
+/////////nie działa, błąd
+    public List<CustomerModel> getAllCustomersListForAuction(GetAllCustomersForAuction request) {
         List<CustomerModel> auctionCustomersList = customerService.getAllCustomers();
         return auctionCustomersList.stream()
                 .filter(auctionCustomers -> auctionCustomers.getCustomerAuctionList().stream()
-                        .anyMatch(auction -> auction.getAuctionId().equals(auctionIdRequest)))
+                        .anyMatch(auction -> auction.getAuctionId().equals(request.getAuctionId())))
                 .toList();
     }
 
+    public void editAuctionWithBid(EditAuctionWithBidRequest request) {
+        CustomerModel customer = customerService.getCustomerById(request.getCustomerModelId());
+        AuctionModel auction = auctionRepository.getReferenceById(request.getAuctionModelId());
 
-//    public void editAuctionWithBid(EditAuctionWithBidRequest request) {
-//        CustomerModel customer = customerService.getCustomerById(request.getCustomerModelId());
-//        AuctionModel auction = auctionService.getAuctionById(request.getAuctionModelId());
-//        BidModel bid = BidModel.builder()
-//                .bidAmount(request.getBidAmount())
-//                .bidDate(request.getBidDate())
-//                .auctionModelId(auction)
-//                .customerModelId(customer)
-//                .build();
-//
-//        BidModel bidModel = bidService.createBid(bid);
-//        auction.getAuctionBids().add(bidModel);
-//        auction.getAuctionCustomerList().add(customer);
-//        auctionRepository.save(auction);
-//    }
+        BidModel bid = BidModel.builder()
+                .auctionModelId(auction)
+                .customerModelId(customer)
+                .bidAmount(request.getBidAmount())
+                .bidDate(LocalDateTime.now())
+                .build();
+
+        BidModel bidModel = bidService.createBid(bid);
+        auction.getAuctionBids().add(bidModel);
+        auction.getAuctionCustomerList().add(customer);
+//        customer.getCustomerAuctionList().add(auction);
+        auctionRepository.save(auction);
+    }
 
 //    public CustomerModel getWinningBid(AuctionModel auctionModel) {
 //        Set<BidModel> auctionBids = auctionModel.getAuctionBids();
@@ -80,7 +84,7 @@ public class AuctionService {
 //
 //        return winningBid.getCustomerModelId();
 //    }
-
+//////////niepotrzebne?
     public AuctionModel getAuctionById(Long id) {
         Optional<AuctionModel> auction = auctionRepository.findById(id);
         if (auction.isPresent()) {
@@ -98,12 +102,12 @@ public class AuctionService {
                 .collect(Collectors.toList());
     }
 
-//        auction.ifPresentOrElse(auctionModel -> auctionRepository.findById(id), () -> log.info("nie ma takiej aukcji"));
-//        return null;
-
-//    public List<AuctionModel> getAuctionByKeyword(String keyword) {
-//        return auctionRepository.findAllByAuctionTitleContains(keyword);
-//    }
+    public List<AuctionModel> getAuctionByKeyword(GetAuctionByKeyword request) {
+        List<AuctionModel> auctionContains = auctionRepository.findAll();
+        return auctionContains.stream()
+                .filter(auction -> auction.getAuctionTitle().contains(request.getKeyword()))
+                .toList();
+    }
 
     public void deleteAuction(Long id) {
         auctionRepository.deleteById(id);

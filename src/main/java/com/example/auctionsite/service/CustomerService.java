@@ -6,6 +6,7 @@ import com.example.auctionsite.exeption.EmptyListException;
 import com.example.auctionsite.model.AuctionModel;
 import com.example.auctionsite.model.CustomerModel;
 import com.example.auctionsite.model.enums.Role;
+import com.example.auctionsite.repositories.AuctionRepository;
 import com.example.auctionsite.repositories.CustomerRepository;
 import com.example.auctionsite.request.CreateCustomerRequest;
 import com.example.auctionsite.request.GetAllAuctionsForCustomer;
@@ -29,8 +30,9 @@ public class CustomerService implements UserDetailsService {
 
     @Autowired
     private CustomerRepository customerRepository;
-    private AuctionModel auctionModel;
-    private AuctionService auctionService;
+    @Autowired
+    private AuctionRepository auctionRepository;
+
 
     @Override
     public UserDetails loadUserByUsername(String customerName) throws UsernameNotFoundException {
@@ -74,16 +76,16 @@ public class CustomerService implements UserDetailsService {
         return customerData;
     }
 ///////////////
-    public List<AuctionModel> getCustomerAuctionsList(GetAllAuctionsForCustomer request) {
-        List<AuctionModel> allAuctions = auctionService.getAllAuctions();
-        allAuctions.stream()
+    public List<AuctionModel> getAllAuctionsListForCustomer(GetAllAuctionsForCustomer request) {
+        List<AuctionModel> allAuctions = auctionRepository.findAll();
+        return allAuctions.stream()
                 .filter(customerAuctions -> customerAuctions.getAuctionCustomerList().stream()
                         .anyMatch(customer -> customer.getCustomerId().equals(request.getCustomerId())))
                 .collect(Collectors.toList());
-        if (allAuctions.size() == 0) {
-            throw new EmptyListException("List is empty");
-        }
-        return allAuctions;
+//        if (allAuctions.size() == 0) {
+//            throw new EmptyListException("List is empty");
+//        }
+//        return allAuctions;
     }
 ////////////////
     public CustomerModel editCustomerRole(Long customerId) {

@@ -20,33 +20,41 @@ public class AuctionController {
 
     @Autowired
     private final AuctionService auctionService;
+    @Autowired
     private final CustomerService customerService;
+    @Autowired
     private final BidService bidService;
+
+    @GetMapping("/getAllAuctions")
+    public List<AuctionModel> getAuctionList() {
+        return auctionService.getAllAuctions();
+    }
 
     @PostMapping("/addAuction")
     public void createAuction(@RequestBody CreateAuctionRequest request) {
         auctionService.createAuction(request);
     }
 
-    @GetMapping("/getAll")
-    public List<AuctionModel> getAuctionList() {
-        return auctionService.getAllAuctions();
-    }
-
-    @PostMapping("/getByCategory")
+    @GetMapping("/getByCategory")
     public List<AuctionModel> getAuctionByCategory(@RequestBody GetAuctionByCategoryRequest request) {
         return auctionService.getAuctionByCategories(request.getAuctionItemCategory());
     }
-    //////////
-    @GetMapping("/getAllCustomers")
-    public List<CustomerModel> getAuctionAllCustomers(@RequestBody GetAllCustomersForAuction request) {
-        return auctionService.getAuctionAllCustomersList(request);
+
+    @GetMapping("/getByKeyword")
+    public List<AuctionModel> getAuctionByCategory(@RequestBody GetAuctionByKeyword request) {
+        return auctionService.getAuctionByKeyword(request);
     }
 
-//    @PostMapping("/addAuctionBid")
-//    public void editAuctionWithBid(@RequestBody EditAuctionWithBidRequest request) {
-//        auctionService.editAuctionWithBid(request);
-//    }
+///////sprawdzić
+    @GetMapping("/getAllCustomersForAuction")
+    public List<CustomerModel> getAllCustomersForAuction(@RequestBody GetAllCustomersForAuction request) {
+        return auctionService.getAllCustomersListForAuction(request);
+    }
+
+    @PostMapping("/addAuctionBid")
+    public void editAuctionWithBid(@RequestBody EditAuctionWithBidRequest request) {
+        auctionService.editAuctionWithBid(request);
+    }
 
     @DeleteMapping("/deleteAuction/{id}")
     public void deleteAuction(@PathVariable("id") Long auctionId) {

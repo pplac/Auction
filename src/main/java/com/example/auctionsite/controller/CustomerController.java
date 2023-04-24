@@ -27,7 +27,12 @@ public class CustomerController {
         return customerService.getAllCustomers();
     }
 
-    @GetMapping("/getCustomer/{id}")
+    @PostMapping("/addCustomer")
+    public void createCustomer(@RequestBody CreateCustomerRequest request) {
+        customerService.createCustomer(request);
+    }
+
+    @GetMapping("/getCustomerById/{id}")
     public CustomerModel getCustomerById(@PathVariable("id") Long id) {
         CustomerModel chosenCustomer = customerService.getCustomerById(id);
         if (chosenCustomer.getCustomerAuctionOwnerList().size() > 0) {
@@ -35,19 +40,13 @@ public class CustomerController {
         }
         return customerService.editCustomerRole(chosenCustomer.getCustomerId());
     }
-
-    @PostMapping("/addCustomer")
-    public void createCustomer(@RequestBody CreateCustomerRequest request) {
-        customerService.createCustomer(request);
-    }
-/////////////////Cannot invoke "com.example.auctionsite.service.AuctionService.getAllAuctions()"
-// because "this.auctionService" is null
-    @GetMapping("/getCustomerAuctionsListById")
+/////////////////
+    @GetMapping("/getAllAuctionsForCustomer")
     public List<AuctionModel> getCustomerAuctionList(@RequestBody GetAllAuctionsForCustomer request) {
-        return customerService.getCustomerAuctionsList(request);
+        return customerService.getAllAuctionsListForCustomer(request);
     }
 //pozniej
-    @GetMapping("/getCustomerWinAuction/{id}")
+    @GetMapping("/getWonAuctionsForCustomer/{id}")
     public List<AuctionModel> getCustomerWinAuction(@PathVariable("id") Long id,
                                                     @RequestBody GetAllAuctionsForCustomer request) {
         List<AuctionModel> customerAuctions = auctionService.getAllAuctions();
@@ -56,7 +55,7 @@ public class CustomerController {
                 .collect(Collectors.toList());
     }
 //////////////////
-    @PostMapping("/deleteCustomer/{id}")
+    @DeleteMapping ("/deleteCustomer/{id}")
     public void deleteCustomer(@PathVariable("id") Long customerId) {
         customerService.deleteCustomer(customerId);
     }
@@ -64,15 +63,3 @@ public class CustomerController {
 }
 
 
-//    public void postEditCustomer() {
-//    }
-
-//    //
-//    public void getCustomerByEmail() {
-//
-//    }
-//
-//    //
-//    public void getCustomerByEmail() {
-//
-//    }
