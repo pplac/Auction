@@ -32,29 +32,28 @@ public class CustomerController {
         customerService.createCustomer(request);
     }
 
-    @GetMapping("/getCustomerById/{id}")
-    public CustomerModel getCustomerById(@PathVariable("id") Long id) {
-        CustomerModel chosenCustomer = customerService.getCustomerById(id);
-        if (chosenCustomer.getCustomerAuctionOwnerList().size() > 0) {
-            customerService.getCustomerById(id);
-        }
-        return customerService.editCustomerRole(chosenCustomer.getCustomerId());
-    }
-/////////////////
-    @GetMapping("/getAllAuctionsForCustomer")
+//    @GetMapping("/getCustomerById/{id}")
+//    public CustomerModel getCustomerById(@PathVariable("id") Long id) {
+//        CustomerModel chosenCustomer = customerService.getCustomerById(id);
+//        if (chosenCustomer.getCustomerAuctionOwnerList().size() > 0) {
+//            customerService.getCustomerById(id);
+//        }
+//        return customerService.editCustomerRole(chosenCustomer.getCustomerId());
+//    }
+    ///////sprawdzić
+    @GetMapping("/getAllAuctionListForCustomer")
     public List<AuctionModel> getCustomerAuctionList(@RequestBody GetAllAuctionsForCustomer request) {
-        return customerService.getAllAuctionsListForCustomer(request);
+        return customerService.getAllAuctionListForCustomer(request);
     }
-//pozniej
-    @GetMapping("/getWonAuctionsForCustomer/{id}")
-    public List<AuctionModel> getCustomerWinAuction(@PathVariable("id") Long id,
-                                                    @RequestBody GetAllAuctionsForCustomer request) {
-        List<AuctionModel> customerAuctions = auctionService.getAllAuctions();
-        return customerAuctions.stream()
-                .filter(auction -> bidService.getWinningBid(auction.getAuctionBids()).getCustomerModelId().getCustomerId() == request.getCustomerId())
-                .collect(Collectors.toList());
-    }
-//////////////////
+    ///////sprawdzić
+//    @GetMapping("/getWonAuctionsForCustomer/{id}")
+//    public List<AuctionModel> getCustomerWinAuction(@PathVariable("id") Long id,
+//                                                    @RequestBody GetAllAuctionsForCustomer request) {
+//        return customerAuctions.stream()
+//                .filter(auction -> bidService.
+//                .collect(Collectors.toList());
+//    }
+
     @DeleteMapping ("/deleteCustomer/{id}")
     public void deleteCustomer(@PathVariable("id") Long customerId) {
         customerService.deleteCustomer(customerId);

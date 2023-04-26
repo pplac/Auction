@@ -4,6 +4,7 @@ package com.example.auctionsite.model;
 import com.example.auctionsite.annotation.EmailApp;
 import com.example.auctionsite.annotation.PostalCode;
 import com.example.auctionsite.model.enums.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -32,10 +33,15 @@ public class CustomerModel implements UserDetails {
     private String customerPostalCode;
     @OneToMany
     private List<AuctionModel> customerAuctionOwnerList;
+//    @JsonIgnore
     @ManyToMany
+//    @JoinTable(name = "customerModel_auctionModel",
+//            joinColumns = { @JoinColumn(name = "customerModel_customerId") },
+//            inverseJoinColumns = { @JoinColumn(name = "auctionModel_auctionId") })
     private List<AuctionModel> customerAuctionList;
     @OneToMany
     private Set<BidModel> customerBids;
+    @JsonIgnore
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     Set<Role> customerRoles = new HashSet<>();
     @Override

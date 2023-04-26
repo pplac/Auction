@@ -4,7 +4,9 @@ import com.example.auctionsite.model.AuctionModel;
 import com.example.auctionsite.model.BidModel;
 import com.example.auctionsite.model.CustomerModel;
 import com.example.auctionsite.model.enums.Categories;
+import com.example.auctionsite.model.enums.Role;
 import com.example.auctionsite.repositories.AuctionRepository;
+import com.example.auctionsite.repositories.CustomerRepository;
 import com.example.auctionsite.request.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,9 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.Set;
+
+import static java.util.stream.Collectors.toList;
 
 @RequiredArgsConstructor
 @Service
@@ -26,12 +31,19 @@ public class AuctionService {
     @Autowired
     private CustomerService customerService;
     @Autowired
+     private CustomerRepository customerRepository;
+    @Autowired
     private BidService bidService;
 
+    public List<AuctionModel> getAllAuctions() {
+        return auctionRepository.findAll();
+
+    }
 
     public AuctionModel createAuction(CreateAuctionRequest request) {
 
         CustomerModel customer = customerService.getCustomerById(request.getAuctionCustomerOwnerId());
+
         AuctionModel auction = AuctionModel.builder()
                 .auctionCustomerOwnerId(customer)
                 .auctionMinimumBid(request.getAuctionMinimumBid())
@@ -44,19 +56,16 @@ public class AuctionService {
                 .auctionEndDate(LocalDateTime.now().plusDays(request.getDaysAuctionIsActive()))
                 .auctionIsActive(LocalDateTime.now().plusDays(request.getDaysAuctionIsActive()).isAfter(LocalDateTime.now()))
                 .build();
-
+        customer.getCustomerRoles().add(Role.ROLE_AUCTIONEER);
         return auctionRepository.save(auction);
     }
 
-    public List<AuctionModel> getAllAuctions() {
-        return auctionRepository.findAll();
-    }
-/////////nie działa, błąd
-    public List<CustomerModel> getAllCustomersListForAuction(GetAllCustomersForAuction request) {
-        List<CustomerModel> auctionCustomersList = customerService.getAllCustomers();
-        return auctionCustomersList.stream()
-                .filter(auctionCustomers -> auctionCustomers.getCustomerAuctionList().stream()
-                        .anyMatch(auction -> auction.getAuctionId().equals(request.getAuctionId())))
+    /////////DZiAŁA
+    public List<List<CustomerModel>> getAllCustomersListForAuction(GetAllCustomersForAuction request) {
+        List<AuctionModel> auction = auctionRepository.findAll();
+        return auction.stream()
+                .filter(oneAuction -> oneAuction.getAuctionId().equals(request.getAuctionId()))
+                .map(AuctionModel::getAuctionCustomerList)
                 .toList();
     }
 
@@ -74,15 +83,21 @@ public class AuctionService {
         BidModel bidModel = bidService.createBid(bid);
         auction.getAuctionBids().add(bidModel);
         auction.getAuctionCustomerList().add(customer);
-//        customer.getCustomerAuctionList().add(auction);
         auctionRepository.save(auction);
+
     }
 
-//    public CustomerModel getWinningBid(AuctionModel auctionModel) {
-//        Set<BidModel> auctionBids = auctionModel.getAuctionBids();
-//        BidModel winningBid = bidService.getWinningBid(auctionBids);
+//        public BidModel getWinningBid(GetWinningBid request) {
+//        List<AuctionModel> allAuctionsBids = auctionRepository.findAll();
+//        allAuctionsBids.stream()
+//                .filter(bids -> bids.getAuctionId().equals(request.getAuctionId()))
+//                .collect(toList());
 //
-//        return winningBid.getCustomerModelId();
+//        return allAuctionsBids.stream()
+//                .max(Comparator.comparing(AuctionModel::getAuctionBids))
+//                .collect();
+//
+//
 //    }
 //////////niepotrzebne?
     public AuctionModel getAuctionById(Long id) {
@@ -95,17 +110,19 @@ public class AuctionService {
         }
     }
 
+    ///////////nie działa
     public List<AuctionModel> getAuctionByCategories(Categories categories) {
         List<AuctionModel> allAuctionsByCategory = auctionRepository.findAll();
         return allAuctionsByCategory.stream()
                 .filter(auctionItem -> auctionItem.getAuctionItemCategory() == categories)
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
-    public List<AuctionModel> getAuctionByKeyword(GetAuctionByKeyword request) {
+    /////////nie działa, błąd
+    public List<AuctionModel> getAuctionByKeyword(String request) {
         List<AuctionModel> auctionContains = auctionRepository.findAll();
         return auctionContains.stream()
-                .filter(auction -> auction.getAuctionTitle().contains(request.getKeyword()))
+                .filter(auction -> auction.getAuctionTitle().contains(request))
                 .toList();
     }
 

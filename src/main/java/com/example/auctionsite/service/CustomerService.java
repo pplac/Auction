@@ -8,8 +8,10 @@ import com.example.auctionsite.model.CustomerModel;
 import com.example.auctionsite.model.enums.Role;
 import com.example.auctionsite.repositories.AuctionRepository;
 import com.example.auctionsite.repositories.CustomerRepository;
+import com.example.auctionsite.request.CreateAuctionRequest;
 import com.example.auctionsite.request.CreateCustomerRequest;
 import com.example.auctionsite.request.GetAllAuctionsForCustomer;
+import com.example.auctionsite.request.GetAllCustomersForAuction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,35 +77,29 @@ public class CustomerService implements UserDetailsService {
                         customer.getCustomerPostalCode().length() == 0;
         return customerData;
     }
-///////////////
-    public List<AuctionModel> getAllAuctionsListForCustomer(GetAllAuctionsForCustomer request) {
-        List<AuctionModel> allAuctions = auctionRepository.findAll();
-        return allAuctions.stream()
-                .filter(customerAuctions -> customerAuctions.getAuctionCustomerList().stream()
-                        .anyMatch(customer -> customer.getCustomerId().equals(request.getCustomerId())))
-                .collect(Collectors.toList());
-//        if (allAuctions.size() == 0) {
-//            throw new EmptyListException("List is empty");
-//        }
-//        return allAuctions;
+
+    public List<AuctionModel> getAllAuctionListForCustomer(GetAllAuctionsForCustomer request) {
+        List<AuctionModel> auction = auctionRepository.findAll();
+        return auction.stream()
+                .filter(oneAuction -> oneAuction.getAuctionCustomerList().stream()
+                        .anyMatch(auctionCustomer -> auctionCustomer.getCustomerId().equals(request.getCustomerId())))
+                .toList();
+//        List<CustomerModel> customer = customerRepository.findAll();
+//        return customer.stream()
+//                .filter(thisCustomer -> thisCustomer.getCustomerId().equals(request.getCustomerId()))
+//                .map(CustomerModel::getCustomerAuctionList)
+//                .toList();
     }
-////////////////
-    public CustomerModel editCustomerRole(Long customerId) {
-        CustomerModel customerChange = customerRepository.findById(customerId)
-                .orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
-        customerChange.getCustomerRoles().add(Role.ROLE_AUCTIONEER);
-        customerRepository.save(customerChange);
-        return customerChange;
+
+//
+    public CustomerModel getCustomerByEmail(String customerEmail) {
+        return customerRepository.findCustomerByCustomerEmail(customerEmail)
+                .orElseThrow(() ->new UsernameNotFoundException("User cannot be found with id: " + customerEmail));
     }
-////
-//    public CustomerModel getCustomerByEmail(String customerEmail) {
-//        return customerRepository.findCustomerByCustomerEmail(customerEmail)
-//                .orElseThrow(() ->new UsernameNotFoundException("User cannot be found with id: " + customerEmail));
-//    }
-////
-//    public List<CustomerModel> getCustomerByKeyword(String keyword) {
-//        return customerRepository.findAllByCustomerNameContains(keyword);
-//    }
+//
+    public List<CustomerModel> getCustomerByKeyword(String keyword) {
+        return customerRepository.findAllByCustomerNameContains(keyword);
+    }
 
     public void deleteCustomer(Long id) {
         customerRepository.deleteById(id);

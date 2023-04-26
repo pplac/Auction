@@ -2,6 +2,7 @@ package com.example.auctionsite.model;
 
 
 import com.example.auctionsite.model.enums.Categories;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -38,8 +39,9 @@ public class AuctionModel {
     private LocalDateTime auctionPostDate;
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDateTime auctionEndDate;
+    @JsonIgnore
     @ManyToMany
-    private Set<CustomerModel> auctionCustomerList;
+    private List<CustomerModel> auctionCustomerList;
     @OneToMany
     private Set<BidModel> auctionBids;
     private boolean auctionIsActive;

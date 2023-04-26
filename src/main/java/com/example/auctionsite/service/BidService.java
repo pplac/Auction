@@ -2,6 +2,7 @@ package com.example.auctionsite.service;
 
 
 import com.example.auctionsite.exeption.BidNotFoundException;
+import com.example.auctionsite.model.AuctionModel;
 import com.example.auctionsite.model.BidModel;
 import com.example.auctionsite.model.CustomerModel;
 import com.example.auctionsite.repositories.BidRepository;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class BidService {
 
-//    Map<CustomerModel, BidModel> bids = new HashMap<>();
+    //    Map<CustomerModel, BidModel> bids = new HashMap<>();
     private Set<BidModel> bids = new HashSet<>();
     private final BidRepository bidRepository;
     private CustomerModel customerModel;
@@ -32,11 +33,11 @@ public class BidService {
         return bidRepository.findAllByBidId(bidId)
                 .orElseThrow(() -> new BidNotFoundException("Bid not found: " + bidId));
     }
-//
-    public BidModel getWinningBid(Set<BidModel> winningBid) {
-        return winningBid.stream()
-                .max(Comparator.comparing(BidModel::getBidAmount))
-                .orElseThrow();
+
+    //
+    public List<BidModel> getAllBids() {
+        return bidRepository.findAll();
     }
+
 
 }
