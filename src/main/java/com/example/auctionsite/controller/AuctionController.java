@@ -35,18 +35,20 @@ public class AuctionController {
     public void createAuction(@RequestBody CreateAuctionRequest request) {
         auctionService.createAuction(request);
     }
-///////sprawdzić
+
+    ///////sprawdzić
     @GetMapping("/getByCategory")
     public List<AuctionModel> getAuctionByCategory(@RequestBody GetAuctionByCategoryRequest request) {
         return auctionService.getAuctionByCategories(request.getAuctionItemCategory());
     }
-//////sprawdzić
+
+    //////sprawdzić
     @GetMapping("/getByKeyword")
     public List<AuctionModel> getAuctionByCategory(@RequestBody GetAuctionByKeyword request) {
         return auctionService.getAuctionByKeyword(request.getKeyword());
     }
 
-///////sprawdzić
+    ///////sprawdzić
     @GetMapping("/getAllCustomersForAuction")
     public List<List<CustomerModel>> getAllCustomersForAuction(@RequestBody GetAllCustomersForAuction request) {
         return auctionService.getAllCustomersListForAuction(request);

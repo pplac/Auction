@@ -1,4 +1,5 @@
 package com.example.auctionsite.model;
+
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,7 +18,9 @@ public class BidModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bidId;
+    @Column(name = "amount")
     private BigDecimal bidAmount;
+    @Column(name = "post_date")
     private LocalDateTime bidDate;
     @ManyToOne
     private AuctionModel auctionModelId;

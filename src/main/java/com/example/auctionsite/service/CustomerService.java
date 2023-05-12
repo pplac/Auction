@@ -79,11 +79,18 @@ public class CustomerService implements UserDetailsService {
     }
 
     public List<AuctionModel> getAllAuctionListForCustomer(GetAllAuctionsForCustomer request) {
+//        List<CustomerModel> customer = customerRepository.findAll();
+//        customer.stream()
+//                .filter(customer -> customer.)
+//                .anyMatch(oneCustomer -> oneCustomer.getCustomerId().equals(request.getCustomerId()))
+//
+
         List<AuctionModel> auction = auctionRepository.findAll();
         return auction.stream()
                 .filter(oneAuction -> oneAuction.getAuctionCustomerList().stream()
                         .anyMatch(auctionCustomer -> auctionCustomer.getCustomerId().equals(request.getCustomerId())))
                 .toList();
+
 //        List<CustomerModel> customer = customerRepository.findAll();
 //        return customer.stream()
 //                .filter(thisCustomer -> thisCustomer.getCustomerId().equals(request.getCustomerId()))

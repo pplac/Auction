@@ -25,6 +25,7 @@ public class AuctionModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "auction_id")
     private Long auctionId;
     @ManyToOne
     private CustomerModel auctionCustomerOwnerId;
@@ -43,6 +44,7 @@ public class AuctionModel {
     @ManyToMany
     private List<CustomerModel> auctionCustomerList;
     @OneToMany
+    @Column(name = "auction_bids")
     private Set<BidModel> auctionBids;
     private boolean auctionIsActive;
 

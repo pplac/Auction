@@ -33,7 +33,7 @@ public class CustomerModel implements UserDetails {
     private String customerPostalCode;
     @OneToMany
     private List<AuctionModel> customerAuctionOwnerList;
-//    @JsonIgnore
+    //    @JsonIgnore
     @ManyToMany
 //    @JoinTable(name = "customerModel_auctionModel",
 //            joinColumns = { @JoinColumn(name = "customerModel_customerId") },
@@ -44,31 +44,38 @@ public class CustomerModel implements UserDetails {
     @JsonIgnore
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     Set<Role> customerRoles = new HashSet<>();
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         SimpleGrantedAuthority authority = new SimpleGrantedAuthority(customerRoles.toString());
         return Collections.singleton(authority);
     }
+
     @Override
     public String getUsername() {
         return customerName;
     }
+
     @Override
     public String getPassword() {
         return customerPassword;
     }
+
     @Override
     public boolean isAccountNonExpired() {
         return false;
     }
+
     @Override
     public boolean isAccountNonLocked() {
         return false;
     }
+
     @Override
     public boolean isCredentialsNonExpired() {
         return false;
     }
+
     @Override
     public boolean isEnabled() {
         return false;

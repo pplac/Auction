@@ -31,7 +31,7 @@ public class AuctionService {
     @Autowired
     private CustomerService customerService;
     @Autowired
-     private CustomerRepository customerRepository;
+    private CustomerRepository customerRepository;
     @Autowired
     private BidService bidService;
 
@@ -40,7 +40,7 @@ public class AuctionService {
 
     }
 
-    public AuctionModel createAuction(CreateAuctionRequest request) {
+    public void createAuction(CreateAuctionRequest request) {
 
         CustomerModel customer = customerService.getCustomerById(request.getAuctionCustomerOwnerId());
 
@@ -56,8 +56,9 @@ public class AuctionService {
                 .auctionEndDate(LocalDateTime.now().plusDays(request.getDaysAuctionIsActive()))
                 .auctionIsActive(LocalDateTime.now().plusDays(request.getDaysAuctionIsActive()).isAfter(LocalDateTime.now()))
                 .build();
+        customer.getCustomerAuctionOwnerList().add(auction);
         customer.getCustomerRoles().add(Role.ROLE_AUCTIONEER);
-        return auctionRepository.save(auction);
+        auctionRepository.save(auction);
     }
 
     /////////DZiAŁA
@@ -83,11 +84,14 @@ public class AuctionService {
         BidModel bidModel = bidService.createBid(bid);
         auction.getAuctionBids().add(bidModel);
         auction.getAuctionCustomerList().add(customer);
+        customer.getCustomerAuctionList().add(auction);
+        customer.getCustomerBids().add(bid);
+        customerRepository.save(customer);
         auctionRepository.save(auction);
 
     }
 
-//        public BidModel getWinningBid(GetWinningBid request) {
+    //        public BidModel getWinningBid(GetWinningBid request) {
 //        List<AuctionModel> allAuctionsBids = auctionRepository.findAll();
 //        allAuctionsBids.stream()
 //                .filter(bids -> bids.getAuctionId().equals(request.getAuctionId()))
