@@ -103,7 +103,7 @@ public class AuctionService {
 //
 //
 //    }
-//////////niepotrzebne?
+
     public AuctionModel getAuctionById(Long id) {
         Optional<AuctionModel> auction = auctionRepository.findById(id);
         if (auction.isPresent()) {
@@ -114,7 +114,7 @@ public class AuctionService {
         }
     }
 
-    ///////////nie działa
+
     public List<AuctionModel> getAuctionByCategories(Categories categories) {
         List<AuctionModel> allAuctionsByCategory = auctionRepository.findAll();
         return allAuctionsByCategory.stream()
@@ -122,7 +122,7 @@ public class AuctionService {
                 .collect(toList());
     }
 
-    /////////nie działa, błąd
+
     public List<AuctionModel> getAuctionByKeyword(String request) {
         List<AuctionModel> auctionContains = auctionRepository.findAll();
         return auctionContains.stream()
