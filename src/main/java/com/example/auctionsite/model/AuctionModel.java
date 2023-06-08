@@ -27,6 +27,7 @@ public class AuctionModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "auction_id")
     private Long auctionId;
+    @JsonIgnore
     @ManyToOne
     private CustomerModel auctionCustomerOwnerId;
     private BigDecimal auctionMinimumBid;

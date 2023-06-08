@@ -31,15 +31,18 @@ public class CustomerModel implements UserDetails {
     private String customerEmail;
     @PostalCode
     private String customerPostalCode;
+    @JsonIgnore
     @OneToMany
     private List<AuctionModel> customerAuctionOwnerList;
     //    @JsonIgnore
     @ManyToMany
+    @JsonIgnore
 //    @JoinTable(name = "customerModel_auctionModel",
 //            joinColumns = { @JoinColumn(name = "customerModel_customerId") },
 //            inverseJoinColumns = { @JoinColumn(name = "auctionModel_auctionId") })
     private List<AuctionModel> customerAuctionList;
     @OneToMany
+    @JsonIgnore
     private Set<BidModel> customerBids;
     @JsonIgnore
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
