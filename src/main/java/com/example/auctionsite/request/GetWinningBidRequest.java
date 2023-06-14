@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class GetWinningBid {
+public class GetWinningBidRequest {
     Long auctionId;
 
 

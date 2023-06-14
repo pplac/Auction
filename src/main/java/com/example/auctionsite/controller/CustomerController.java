@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -42,7 +41,7 @@ public class CustomerController {
 //    }
     ///////sprawdzić
     @GetMapping("/getAllAuctionListForCustomer")
-    public List<AuctionModel> getCustomerAuctionList(@RequestBody GetAllAuctionsForCustomer request) {
+    public List<AuctionModel> getCustomerAuctionList(@RequestBody GetAllAuctionsForCustomerRequest request) {
         return customerService.getAllAuctionListForCustomer(request);
     }
     ///////sprawdzić

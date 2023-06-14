@@ -2,7 +2,6 @@ package com.example.auctionsite.controller;
 
 
 import com.example.auctionsite.model.AuctionModel;
-import com.example.auctionsite.model.BidModel;
 import com.example.auctionsite.model.CustomerModel;
 import com.example.auctionsite.request.*;
 import com.example.auctionsite.service.AuctionService;
@@ -44,13 +43,13 @@ public class AuctionController {
 
     //////sprawdzić
     @GetMapping("/getByKeyword")
-    public List<AuctionModel> getAuctionByCategory(@RequestBody GetAuctionByKeyword request) {
+    public List<AuctionModel> getAuctionByCategory(@RequestBody GetAuctionByKeywordRequest request) {
         return auctionService.getAuctionByKeyword(request.getKeyword());
     }
 
     ///////sprawdzić
     @GetMapping("/getAllCustomersForAuction")
-    public List<List<CustomerModel>> getAllCustomersForAuction(@RequestBody GetAllCustomersForAuction request) {
+    public List<List<CustomerModel>> getAllCustomersForAuction(@RequestBody GetAllCustomersForAuctionRequest request) {
         return auctionService.getAllCustomersListForAuction(request);
     }
 

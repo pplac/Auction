@@ -2,16 +2,13 @@ package com.example.auctionsite.service;
 
 import com.example.auctionsite.exeption.CreateCustomerException;
 import com.example.auctionsite.exeption.CustomerNotFoundException;
-import com.example.auctionsite.exeption.EmptyListException;
 import com.example.auctionsite.model.AuctionModel;
 import com.example.auctionsite.model.CustomerModel;
 import com.example.auctionsite.model.enums.Role;
 import com.example.auctionsite.repositories.AuctionRepository;
 import com.example.auctionsite.repositories.CustomerRepository;
-import com.example.auctionsite.request.CreateAuctionRequest;
 import com.example.auctionsite.request.CreateCustomerRequest;
-import com.example.auctionsite.request.GetAllAuctionsForCustomer;
-import com.example.auctionsite.request.GetAllCustomersForAuction;
+import com.example.auctionsite.request.GetAllAuctionsForCustomerRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +20,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -78,7 +74,7 @@ public class CustomerService implements UserDetailsService {
         return customerData;
     }
 
-    public List<AuctionModel> getAllAuctionListForCustomer(GetAllAuctionsForCustomer request) {
+    public List<AuctionModel> getAllAuctionListForCustomer(GetAllAuctionsForCustomerRequest request) {
 //        List<CustomerModel> customer = customerRepository.findAll();
 //        customer.stream()
 //                .filter(customer -> customer.)

@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class GetAllCustomersForAuction {
+public class GetAllCustomersForAuctionRequest {
 
     Long auctionId;
 

@@ -7,8 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @RequiredArgsConstructor
-public class GetAuctionByKeyword {
+public class GetAllAuctionsForCustomerRequest {
 
-    String keyword;
-
+    Long customerId;
 }

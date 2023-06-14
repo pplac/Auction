@@ -14,10 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import static java.util.stream.Collectors.toList;
 
@@ -62,7 +60,7 @@ public class AuctionService {
     }
 
     /////////DZiAŁA
-    public List<List<CustomerModel>> getAllCustomersListForAuction(GetAllCustomersForAuction request) {
+    public List<List<CustomerModel>> getAllCustomersListForAuction(GetAllCustomersForAuctionRequest request) {
         List<AuctionModel> auction = auctionRepository.findAll();
         return auction.stream()
                 .filter(oneAuction -> oneAuction.getAuctionId().equals(request.getAuctionId()))
