@@ -1,5 +1,6 @@
 package com.example.auctionsite.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ public class BidModel {
     private BigDecimal bidAmount;
     @Column(name = "post_date")
     private LocalDateTime bidDate;
+    @JsonIgnoreProperties("auctionBids")
     @ManyToOne
     private AuctionModel auctionModelId;
     @ManyToOne
