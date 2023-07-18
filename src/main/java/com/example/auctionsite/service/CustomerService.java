@@ -9,9 +9,11 @@ import com.example.auctionsite.repositories.AuctionRepository;
 import com.example.auctionsite.repositories.CustomerRepository;
 import com.example.auctionsite.request.CreateCustomerRequest;
 import com.example.auctionsite.request.GetAllAuctionsForCustomerRequest;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -30,7 +32,6 @@ public class CustomerService implements UserDetailsService {
     private CustomerRepository customerRepository;
     @Autowired
     private AuctionRepository auctionRepository;
-
 
     @Override
     public UserDetails loadUserByUsername(String customerName) throws UsernameNotFoundException {
@@ -65,7 +66,6 @@ public class CustomerService implements UserDetailsService {
     }
 
     private boolean isCustomerInvalid(CustomerModel customer) {
-//        return customer.getCustomerName().length() == 0;
         boolean customerData =
                 customer.getCustomerName().length() == 0 ||
                         customer.getCustomerPassword().length() == 0 ||
@@ -80,27 +80,10 @@ public class CustomerService implements UserDetailsService {
                 .filter(oneAuction -> oneAuction.getAuctionCustomerList().stream()
                         .anyMatch(auctionCustomer -> auctionCustomer.getCustomerId().equals(request.getCustomerId())))
                 .toList();
-
-//        List<CustomerModel> customer = customerRepository.findAll();
-//        return customer.stream()
-//                .filter(thisCustomer -> thisCustomer.getCustomerId().equals(request.getCustomerId()))
-//                .map(CustomerModel::getCustomerAuctionList)
-//                .toList();
     }
-
-
-//    public CustomerModel getCustomerByEmail(String customerEmail) {
-//        return customerRepository.findCustomerByCustomerEmail(customerEmail)
-//                .orElseThrow(() ->new UsernameNotFoundException("User cannot be found with id: " + customerEmail));
-//    }
-//
-//    public List<CustomerModel> getCustomerByKeyword(String keyword) {
-//        return customerRepository.findAllByCustomerNameContains(keyword);
-//    }
 
     public void deleteCustomer(Long id) {
         customerRepository.deleteById(id);
     }
-
 }
 

@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Target;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -35,13 +37,11 @@ public class AuctionService {
 
     public List<AuctionModel> getAllAuctions() {
         return auctionRepository.findAll();
-
     }
 
     public void createAuction(CreateAuctionRequest request) {
 
         CustomerModel customer = customerService.getCustomerById(request.getAuctionCustomerOwnerId());
-
         AuctionModel auction = AuctionModel.builder()
                 .auctionCustomerOwnerId(customer)
                 .auctionMinimumBid(request.getAuctionMinimumBid())
@@ -59,7 +59,6 @@ public class AuctionService {
         auctionRepository.save(auction);
     }
 
-    /////////DZiAŁA
     public List<List<CustomerModel>> getAllCustomersListForAuction(GetAllCustomersForAuctionRequest request) {
         List<AuctionModel> auction = auctionRepository.findAll();
         return auction.stream()
@@ -86,21 +85,7 @@ public class AuctionService {
         customer.getCustomerBids().add(bid);
         customerRepository.save(customer);
         auctionRepository.save(auction);
-
     }
-
-    //        public BidModel getWinningBid(GetWinningBid request) {
-//        List<AuctionModel> allAuctionsBids = auctionRepository.findAll();
-//        allAuctionsBids.stream()
-//                .filter(bids -> bids.getAuctionId().equals(request.getAuctionId()))
-//                .collect(toList());
-//
-//        return allAuctionsBids.stream()
-//                .max(Comparator.comparing(AuctionModel::getAuctionBids))
-//                .collect();
-//
-//
-//    }
 
     public AuctionModel getAuctionById(Long id) {
         Optional<AuctionModel> auction = auctionRepository.findById(id);

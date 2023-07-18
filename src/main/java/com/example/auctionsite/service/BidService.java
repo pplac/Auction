@@ -19,25 +19,10 @@ import java.util.stream.Collectors;
 @Slf4j
 public class BidService {
 
-    //    Map<CustomerModel, BidModel> bids = new HashMap<>();
     private Set<BidModel> bids = new HashSet<>();
     private final BidRepository bidRepository;
-    private CustomerModel customerModel;
-
 
     public BidModel createBid(BidModel bid) {
         return bidRepository.save(bid);
     }
-
-    public BidModel getAuctionsBidsById(Long bidId) {
-        return bidRepository.findAllByBidId(bidId)
-                .orElseThrow(() -> new BidNotFoundException("Bid not found: " + bidId));
-    }
-
-    //
-    public List<BidModel> getAllBids() {
-        return bidRepository.findAll();
-    }
-
-
 }

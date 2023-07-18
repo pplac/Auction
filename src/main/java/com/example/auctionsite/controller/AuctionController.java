@@ -36,6 +36,11 @@ public class AuctionController {
         return auctionService.getAuctionByKeyword(request.getKeyword());
     }
 
+    @GetMapping("/getAuctionById/{id}")
+    public AuctionModel getCustomerById(@PathVariable("id") Long id) {
+        return auctionService.getAuctionById(id);
+    }
+
     @GetMapping("/getAllCustomersForAuction")
     public List<List<CustomerModel>> getAllCustomersForAuction(@RequestBody GetAllCustomersForAuctionRequest request) {
         return auctionService.getAllCustomersListForAuction(request);
