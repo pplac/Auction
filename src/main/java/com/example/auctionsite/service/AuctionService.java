@@ -7,14 +7,14 @@ import com.example.auctionsite.model.enums.Categories;
 import com.example.auctionsite.model.enums.Role;
 import com.example.auctionsite.repositories.AuctionRepository;
 import com.example.auctionsite.repositories.CustomerRepository;
-import com.example.auctionsite.request.*;
+import com.example.auctionsite.request.CreateAuctionRequest;
+import com.example.auctionsite.request.EditAuctionWithBidRequest;
+import com.example.auctionsite.request.GetAllCustomersForAuctionRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Target;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;

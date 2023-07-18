@@ -39,13 +39,8 @@ public class CustomerModel implements UserDetails {
     @JsonIgnore
     @OneToMany
     private List<AuctionModel> customerAuctionOwnerList;
-
-    //    @JsonIgnore
     @ManyToMany
     @JsonIgnore
-//    @JoinTable(name = "customerModel_auctionModel",
-//            joinColumns = { @JoinColumn(name = "customerModel_customerId") },
-//            inverseJoinColumns = { @JoinColumn(name = "auctionModel_auctionId") })
     private List<AuctionModel> customerAuctionList;
 
     @OneToMany
