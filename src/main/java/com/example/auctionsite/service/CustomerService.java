@@ -75,12 +75,6 @@ public class CustomerService implements UserDetailsService {
     }
 
     public List<AuctionModel> getAllAuctionListForCustomer(GetAllAuctionsForCustomerRequest request) {
-//        List<CustomerModel> customer = customerRepository.findAll();
-//        customer.stream()
-//                .filter(customer -> customer.)
-//                .anyMatch(oneCustomer -> oneCustomer.getCustomerId().equals(request.getCustomerId()))
-//
-
         List<AuctionModel> auction = auctionRepository.findAll();
         return auction.stream()
                 .filter(oneAuction -> oneAuction.getAuctionCustomerList().stream()
@@ -94,15 +88,15 @@ public class CustomerService implements UserDetailsService {
 //                .toList();
     }
 
+
+//    public CustomerModel getCustomerByEmail(String customerEmail) {
+//        return customerRepository.findCustomerByCustomerEmail(customerEmail)
+//                .orElseThrow(() ->new UsernameNotFoundException("User cannot be found with id: " + customerEmail));
+//    }
 //
-    public CustomerModel getCustomerByEmail(String customerEmail) {
-        return customerRepository.findCustomerByCustomerEmail(customerEmail)
-                .orElseThrow(() ->new UsernameNotFoundException("User cannot be found with id: " + customerEmail));
-    }
-//
-    public List<CustomerModel> getCustomerByKeyword(String keyword) {
-        return customerRepository.findAllByCustomerNameContains(keyword);
-    }
+//    public List<CustomerModel> getCustomerByKeyword(String keyword) {
+//        return customerRepository.findAllByCustomerNameContains(keyword);
+//    }
 
     public void deleteCustomer(Long id) {
         customerRepository.deleteById(id);

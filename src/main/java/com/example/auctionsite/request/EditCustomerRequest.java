@@ -21,5 +21,4 @@ public class EditCustomerRequest {
     String customerEmail;
     String customerPostalCode;
     Set<Role> customerRoles;
-
 }

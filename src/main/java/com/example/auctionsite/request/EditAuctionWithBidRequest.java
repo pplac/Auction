@@ -18,5 +18,4 @@ public class EditAuctionWithBidRequest {
     Long auctionModelId;
     Long customerModelId;
     BigDecimal bidAmount;
-
 }

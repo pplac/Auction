@@ -14,5 +14,4 @@ public class CreateCustomerRequest {
     String customerPassword;
     String customerEmail;
     String customerPostalCode;
-
 }

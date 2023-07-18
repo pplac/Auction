@@ -19,14 +19,17 @@ public class BidModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bidId;
+
     @Column(name = "amount")
     private BigDecimal bidAmount;
+
     @Column(name = "post_date")
     private LocalDateTime bidDate;
+
     @JsonIgnoreProperties("auctionBids")
     @ManyToOne
     private AuctionModel auctionModelId;
+
     @ManyToOne
     private CustomerModel customerModelId;
-
 }

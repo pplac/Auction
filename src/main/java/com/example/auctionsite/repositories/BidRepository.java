@@ -12,5 +12,4 @@ import java.util.Set;
 public interface BidRepository extends JpaRepository<BidModel, Long> {
 
     Optional<BidModel> findAllByBidId(Long id);
-
 }

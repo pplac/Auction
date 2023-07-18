@@ -21,5 +21,4 @@ public class CreateAuctionRequest {
     String auctionItemDescription;
     BigDecimal auctionItemInitCost;
     int daysAuctionIsActive;
-
 }

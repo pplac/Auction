@@ -20,5 +20,4 @@ public class CreateAuctionItemRequest {
     Categories auctionItemCategory;
     String auctionItemDescription;
     BigDecimal auctionItemInitCost;
-
 }

@@ -28,26 +28,37 @@ public class AuctionModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "auction_id")
     private Long auctionId;
+
     @JsonIgnore
     @ManyToOne
     private CustomerModel auctionCustomerOwnerId;
+
     private BigDecimal auctionMinimumBid;
+
     private String auctionTitle;
+
     private Categories auctionItemCategory;
+
     @Column(name = "description")
     private String auctionItemDescription;
+
     private BigDecimal auctionItemInitCost;
+
     private int daysAuctionIsActive;
+
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDateTime auctionPostDate;
+
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDateTime auctionEndDate;
+
     @JsonIgnoreProperties("customerAuctionOwnerList")
     @ManyToMany
     private List<CustomerModel> auctionCustomerList;
+
     @OneToMany
     @Column(name = "auction_bids")
     private Set<BidModel> auctionBids;
-    private boolean auctionIsActive;
 
+    private boolean auctionIsActive;
 }

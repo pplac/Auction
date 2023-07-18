@@ -1,14 +1,10 @@
 package com.example.auctionsite.controller;
 
-
 import com.example.auctionsite.model.AuctionModel;
 import com.example.auctionsite.model.CustomerModel;
 import com.example.auctionsite.request.*;
 import com.example.auctionsite.service.AuctionService;
-import com.example.auctionsite.service.BidService;
-import com.example.auctionsite.service.CustomerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,12 +14,7 @@ import java.util.List;
 @RequestMapping("/auction")
 public class AuctionController {
 
-    @Autowired
     private final AuctionService auctionService;
-    @Autowired
-    private final CustomerService customerService;
-    @Autowired
-    private final BidService bidService;
 
     @GetMapping("/getAllAuctions")
     public List<AuctionModel> getAuctionList() {
@@ -35,19 +26,16 @@ public class AuctionController {
         auctionService.createAuction(request);
     }
 
-    ///////sprawdzić
     @GetMapping("/getByCategory")
     public List<AuctionModel> getAuctionByCategory(@RequestBody GetAuctionByCategoryRequest request) {
         return auctionService.getAuctionByCategories(request.getAuctionItemCategory());
     }
 
-    //////sprawdzić
     @GetMapping("/getByKeyword")
     public List<AuctionModel> getAuctionByCategory(@RequestBody GetAuctionByKeywordRequest request) {
         return auctionService.getAuctionByKeyword(request.getKeyword());
     }
 
-    ///////sprawdzić
     @GetMapping("/getAllCustomersForAuction")
     public List<List<CustomerModel>> getAllCustomersForAuction(@RequestBody GetAllCustomersForAuctionRequest request) {
         return auctionService.getAllCustomersListForAuction(request);
@@ -57,11 +45,6 @@ public class AuctionController {
     public void editAuctionWithBid(@RequestBody EditAuctionWithBidRequest request) {
         auctionService.editAuctionWithBid(request);
     }
-
-//    @GetMapping("/getWinningBidForAuction")
-//    public BidModel getWinningBidForAuction(@RequestBody GetWinningBid request) {
-//        return
-//    }
 
     @DeleteMapping("/deleteAuction/{id}")
     public void deleteAuction(@PathVariable("id") Long auctionId) {

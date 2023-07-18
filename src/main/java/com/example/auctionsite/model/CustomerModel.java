@@ -25,15 +25,21 @@ public class CustomerModel implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long customerId;
+
     private String customerName;
+
     private String customerPassword;
+
     @EmailApp
     private String customerEmail;
+
     @PostalCode
     private String customerPostalCode;
+
     @JsonIgnore
     @OneToMany
     private List<AuctionModel> customerAuctionOwnerList;
+
     //    @JsonIgnore
     @ManyToMany
     @JsonIgnore
@@ -41,9 +47,11 @@ public class CustomerModel implements UserDetails {
 //            joinColumns = { @JoinColumn(name = "customerModel_customerId") },
 //            inverseJoinColumns = { @JoinColumn(name = "auctionModel_auctionId") })
     private List<AuctionModel> customerAuctionList;
+
     @OneToMany
     @JsonIgnore
     private Set<BidModel> customerBids;
+
     @JsonIgnore
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     Set<Role> customerRoles = new HashSet<>();

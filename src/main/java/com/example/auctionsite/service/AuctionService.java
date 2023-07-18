@@ -112,7 +112,6 @@ public class AuctionService {
         }
     }
 
-
     public List<AuctionModel> getAuctionByCategories(Categories categories) {
         List<AuctionModel> allAuctionsByCategory = auctionRepository.findAll();
         return allAuctionsByCategory.stream()
@@ -120,11 +119,10 @@ public class AuctionService {
                 .collect(toList());
     }
 
-
     public List<AuctionModel> getAuctionByKeyword(String request) {
         List<AuctionModel> auctionContains = auctionRepository.findAll();
         return auctionContains.stream()
-                .filter(auction -> auction.getAuctionTitle().contains(request))
+                .filter(auction -> auction.getAuctionTitle().toUpperCase().contains(request.toUpperCase()))
                 .toList();
     }
 

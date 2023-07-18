@@ -12,6 +12,4 @@ public class ExceptionResponse {
     private String errorMessage;
     private int errorCode;
     private LocalDateTime errorTimestamp;
-
-
 }

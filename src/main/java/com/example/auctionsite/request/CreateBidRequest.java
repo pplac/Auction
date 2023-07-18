@@ -18,5 +18,4 @@ public class CreateBidRequest {
 
     BigDecimal bidAmount;
     LocalDateTime bidDate;
-
 }

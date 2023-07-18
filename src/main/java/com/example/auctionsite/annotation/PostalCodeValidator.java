@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 
 public class PostalCodeValidator implements ConstraintValidator <PostalCode, String> {
 
-
     @Override
     public boolean isValid(String postalCode, ConstraintValidatorContext constraintValidatorContext) {
 
